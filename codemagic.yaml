@@ -6,14 +6,9 @@ workflows:
 
     environment:
       flutter: stable
-      java: 17
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.an2app.scanbite  # must match Apple Developer Portal
-      vars:
-        APP_STORE_CONNECT_ISSUER_ID: Encrypted(...)    # fill after Step 3
-        APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(...) 
-        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(...)
+        bundle_identifier: com.an2app.scanbite
 
     cache:
       cache_paths:
@@ -30,16 +25,7 @@ workflows:
 
       - name: Build iOS IPA
         script: |
-          flutter build ipa --release \
-            --export-options-plist=/Users/builder/export_options.plist
+          flutter build ipa --release
 
     artifacts:
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
-
-    publishing:
-      app_store_connect:
-        auth: integration  # uses connected Apple account
-        submit_to_testflight: true
-        submit_to_app_store: false  # flip to true when ready for full release
