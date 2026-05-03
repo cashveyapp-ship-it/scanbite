@@ -1,0 +1,45 @@
+workflows:
+  ios-release:
+    name: iOS Release (App Store)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: stable
+      java: 17
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.an2app.scanbite  # must match Apple Developer Portal
+      vars:
+        APP_STORE_CONNECT_ISSUER_ID: Encrypted(...)    # fill after Step 3
+        APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(...) 
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(...)
+
+    cache:
+      cache_paths:
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install
+
+      - name: Build iOS IPA
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      app_store_connect:
+        auth: integration  # uses connected Apple account
+        submit_to_testflight: true
+        submit_to_app_store: false  # flip to true when ready for full release
