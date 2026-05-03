@@ -1,0 +1,236 @@
+﻿{
+  "@@locale": "de",
+
+  "settings": "Einstellungen",
+  "notifications": "Benachrichtigungen",
+  "enableNotifications": "Benachrichtigungen aktivieren",
+  "notificationSubtitle": "Erhalte Mahlzeit-Erinnerungen und Gesundheitstipps",
+  "notificationsEnabled": "Benachrichtigungen aktiviert",
+  "notificationsDisabled": "Benachrichtigungen deaktiviert",
+  "language": "Sprache",
+  "legal": "Rechtliches",
+  "privacyPolicy": "Datenschutzerklärung",
+  "privacySubtitle": "Wie wir deine Daten verarbeiten",
+  "termsOfService": "Nutzungsbedingungen",
+  "termsSubtitle": "Unsere Bedingungen und Regeln",
+  "about": "Über",
+  "appVersion": "App-Version",
+
+  "lastUpdatedLabel": "Zuletzt aktualisiert",
+  "copyrightLine": "© 2024 ScanBite. Alle Rechte vorbehalten.",
+
+  "privacyTitle": "Datenschutzerklärung für ScanBite",
+
+  "privacyIntroTitle": "Einleitung",
+  "privacyIntroBody": "ScanBite (\"wir\", \"unser\" oder \"uns\") verpflichtet sich zum Schutz deiner Privatsphäre. Diese Datenschutzerklärung erklärt, wie wir Informationen erfassen, verwenden, offenlegen und schützen, wenn du unsere mobile App nutzt.",
+
+  "privacyCollectTitle": "Welche Daten wir erfassen",
+  "privacyCollectBody": "Wir erfassen Informationen, die du uns direkt bereitstellst, einschließlich:\n\n- Kontoinformationen: Name, E-Mail, Passwort\n- Profilinformationen: Alter, Geschlecht, Größe, Gewicht, Ernährungspräferenzen\n- Gesundheitsinformationen: Food-Scans, Nährwertdaten, Mahlzeitenhistorie\n- Nutzungsinformationen: App-Interaktionen, genutzte Features, Scan-Häufigkeit\n- Geräteinformationen: Gerätetyp, Betriebssystem, eindeutige Kennungen",
+
+  "privacyUseTitle": "Wie wir deine Daten verwenden",
+  "privacyUseBody": "Wir verwenden die erfassten Daten, um:\n\n- Unsere Dienste bereitzustellen und zu betreiben\n- Lebensmittelbilder zu analysieren und Nährwertinfos zu liefern\n- Deine Erfahrung und Empfehlungen zu personalisieren\n- Benachrichtigungen und Updates zu senden\n- Die App zu verbessern und neue Funktionen zu entwickeln\n- Gesetzliche Verpflichtungen einzuhalten\n- Betrug und Missbrauch zu verhindern",
+
+  "privacySecurityTitle": "Datenspeicherung und Sicherheit",
+  "privacySecurityBody": "Wir setzen geeignete technische und organisatorische Maßnahmen ein, um deine personenbezogenen Daten zu schützen:\n\n- Daten werden während der Übertragung und im Speicher verschlüsselt\n- Wir verwenden sicheren Firebase-Cloudspeicher\n- Zugriff auf personenbezogene Daten ist eingeschränkt\n- Regelmäßige Sicherheitsbewertungen\n\nTrotzdem ist keine Übertragung über das Internet 100 % sicher.",
+
+  "privacyThirdPartyTitle": "Drittanbieter-Dienste",
+  "privacyThirdPartyBody": "Wir nutzen folgende Drittanbieter:\n\n- Firebase (Google): Authentifizierung, Datenbank, Speicher\n- OpenAI: Analyse von Lebensmittelbildern\n- Analytics: Nutzungsverhalten verstehen\n\nDiese Dienste haben eigene Datenschutzrichtlinien.",
+
+  "privacyRightsTitle": "Deine Rechte",
+  "privacyRightsBody": "Du hast das Recht:\n\n- Auf deine personenbezogenen Daten zuzugreifen\n- Unrichtige Daten zu korrigieren\n- Die Löschung deiner Daten zu verlangen\n- Deine Daten zu exportieren\n- Marketing-Kommunikation abzulehnen\n- Einwilligungen jederzeit zu widerrufen\n\nUm diese Rechte auszuüben, kontaktiere uns unter alerttmenow@gmail.com",
+
+  "privacyChildrenTitle": "Datenschutz von Kindern",
+  "privacyChildrenBody": "Unser Dienst ist nicht für Kinder unter 13 Jahren bestimmt. Wir erfassen nicht wissentlich personenbezogene Daten von Kindern unter 13 Jahren.",
+
+  "privacyRetentionTitle": "Aufbewahrung",
+  "privacyRetentionBody": "Wir speichern deine Daten so lange, wie dein Konto aktiv ist oder wie nötig, um dir Dienste bereitzustellen. Du kannst jederzeit die Löschung deines Kontos verlangen.",
+
+  "privacyTransfersTitle": "Internationale Datenübertragung",
+  "privacyTransfersBody": "Deine Daten können in andere Länder übertragen und dort verarbeitet werden. Wir stellen geeignete Schutzmaßnahmen sicher.",
+
+  "privacyChangesTitle": "Änderungen der Datenschutzerklärung",
+  "privacyChangesBody": "Wir können diese Datenschutzerklärung gelegentlich aktualisieren. Wir informieren dich, indem wir die neue Version auf dieser Seite veröffentlichen und das Datum „Zuletzt aktualisiert“ anpassen.",
+
+  "privacyContactTitle": "Kontakt",
+  "privacyContactBody": "Wenn du Fragen hast, kontaktiere uns:\n\nEmail: alerttmenow@gmail.com\nWebsite: www.an2app.com/scanbite.com\nAdresse: an2app.com",
+
+  "termsTitle": "Nutzungsbedingungen",
+
+  "termsAcceptanceTitle": "Annahme der Bedingungen",
+  "termsAcceptanceBody": "Durch den Zugriff auf und die Nutzung von ScanBite stimmst du diesen Bedingungen zu. Wenn du nicht zustimmst, nutze die App bitte nicht.",
+
+  "termsServiceDescTitle": "Beschreibung des Dienstes",
+  "termsServiceDescBody": "ScanBite bietet:\n\n- KI-gestützte Nährwertanalyse\n- Barcode-Scan für verpackte Lebensmittel\n- Mahlzeiten-Tracking und Historie\n- Personalisierte Gesundheits-Insights\n- Ziel-Tracking\n- Ernährungsempfehlungen\n\nDer Dienst wird „wie besehen“ und „nach Verfügbarkeit“ bereitgestellt.",
+
+  "termsAccountsTitle": "Benutzerkonten",
+  "termsAccountsBody": "Um bestimmte Funktionen zu nutzen, musst du:\n\n- Ein Konto mit korrekten Daten erstellen\n- Dein Passwort schützen\n- Mindestens 13 Jahre alt sein\n- Alle geltenden Gesetze einhalten\n\nDu bist für alle Aktivitäten in deinem Konto verantwortlich.",
+
+  "termsSubscriptionTitle": "Abonnement und Zahlung",
+  "termsSubscriptionBody": "Premium-Abonnement:\n\n- Monatliches Abo: {price}/Monat\n- Kostenlose Nutzer: {freeScans} Scans pro Monat\n- Premium-Nutzer: Unbegrenzte Scans\n- Automatische Verlängerung, sofern nicht gekündigt\n- Rückerstattungen gemäß Store-Richtlinien\n\nAbos werden über dein App-Store-Konto verwaltet.",
+
+  "@termsSubscriptionBody": {
+    "placeholders": {
+      "price": { "type": "String" },
+      "freeScans": { "type": "String" }
+    }
+  },
+
+  "termsHealthDisclaimerTitle": "Gesundheitshinweis",
+  "termsHealthDisclaimerBody": "WICHTIG – BITTE LESEN:\n\n- ScanBite ist KEIN Medizinprodukt\n- Inhalte dienen nur zu Bildungszwecken\n- Kein Ersatz für professionelle medizinische Beratung\n- Konsultiere Fachpersonal bei medizinischen Entscheidungen\n- Keine Garantie für Nährwertgenauigkeit\n- Bei Erkrankungen professionelle Beratung einholen\n- Allergen-Erkennung kann unvollständig sein\n\nNUTZUNG AUF EIGENES RISIKO.",
+
+  "termsAcceptableUseTitle": "Zulässige Nutzung",
+  "termsAcceptableUseBody": "Du stimmst zu, NICHT:\n\n- Gesetze oder Vorschriften zu verletzen\n- Rechte an geistigem Eigentum zu verletzen\n- Schadcode oder Viren hochzuladen\n- Unbefugten Zugriff zu versuchen\n- Reverse Engineering zu betreiben\n- Die App ohne Erlaubnis kommerziell zu nutzen\n- Andere zu belästigen oder zu schädigen\n- Deine Identität falsch darzustellen",
+
+  "termsIpTitle": "Geistiges Eigentum",
+  "termsIpBody": "Alle Inhalte, Funktionen und Abläufe gehören ScanBite und sind durch Urheberrecht, Markenrecht und andere IP-Rechte geschützt.",
+
+  "termsUserContentTitle": "Nutzerinhalte",
+  "termsUserContentBody": "Wenn du Inhalte hochlädst, gewährst du uns eine Lizenz zur Nutzung, Speicherung und Verarbeitung, behältst aber das Eigentum.",
+
+  "termsLiabilityTitle": "Haftungsbeschränkung",
+  "termsLiabilityBody": "Soweit gesetzlich zulässig, haften wir nicht für indirekte, zufällige oder Folgeschäden.",
+
+  "termsIndemnificationTitle": "Freistellung",
+  "termsIndemnificationBody": "Du stellst ScanBite von Ansprüchen frei, die aus deiner Nutzung der App entstehen.",
+
+  "termsTerminationTitle": "Kündigung",
+  "termsTerminationBody": "Wir können dein Konto bei Verstößen oder nach eigenem Ermessen kündigen oder sperren.",
+
+  "termsChangesTitle": "Änderungen der Bedingungen",
+  "termsChangesBody": "Wir können diese Bedingungen jederzeit ändern. Die weitere Nutzung gilt als Zustimmung.",
+
+  "termsGoverningLawTitle": "Anwendbares Recht",
+  "termsGoverningLawBody": "Diese Bedingungen unterliegen dem Recht deiner Gerichtsbarkeit.",
+
+  "termsDisputeTitle": "Streitbeilegung",
+  "termsDisputeBody": "Streitigkeiten sollen zunächst informell gelöst werden, bevor Mediation oder Schiedsverfahren erfolgen.",
+
+  "termsContactTitle": "Kontaktinformationen",
+  "termsContactBody": "Bei Fragen:\n\nEmail: alerttmenow@gmail.com\nWebsite: www.an2app.com/scanbite.com",
+
+  "termsSeverabilityTitle": "Salvatorische Klausel",
+  "termsSeverabilityBody": "Sollte eine Bestimmung unwirksam sein, bleiben die übrigen Bestimmungen wirksam.",
+
+  "aiFoodNutritionScanner": "KI Food Nutrition Scanner",
+  "email": "E-Mail",
+  "password": "Passwort",
+  "login": "Anmelden",
+  "signUp": "Registrieren",
+  "dontHaveAnAccount": "Noch kein Konto?",
+  "pleaseEnterYourEmail": "Bitte gib deine E-Mail ein",
+  "pleaseEnterAValidEmail": "Bitte gib eine gültige E-Mail ein",
+  "pleaseEnterYourPassword": "Bitte gib dein Passwort ein",
+  "passwordMinChars": "Passwort muss mindestens 6 Zeichen lang sein",
+
+
+ "testNotification": "Testbenachrichtigung",
+   "testNotificationSubtitle": "Tippen, um eine Testbenachrichtigung zu senden",
+   "testNotificationSent": "Testbenachrichtigung gesendet! Überprüfen Sie Ihre Benachrichtigungsleiste.",
+   "testButton": "Testen",
+
+   "admin": "Administrator",
+   "adminPanelTitle": "ADMIN-PANEL",
+   "adminPanelSubtitle": "Alle Benutzer verwalten",
+
+   "subscriptionSectionTitle": "Abonnement",
+   "premiumSubscriptionTitle": "Premium-Abonnement",
+   "unlimitedScans": "Aktiv - Unbegrenzte Scans",
+   "freeScansRemaining": "{count} kostenlose Scans verbleibend",
+   "@freeScansRemaining": {
+     "placeholders": {
+       "count": {
+         "type": "int"
+       }
+     }
+   },
+
+
+
+   "familyPlanTileTitle": "Familienplan",
+   "familyPlanCodeTitle": "Familienplan-Code",
+   "refreshCodeTooltip": "Code aktualisieren",
+   "familyCodeRefreshed": "Familiencode aktualisiert!",
+   "familyCodeInstruction": "Teile diesen Code mit deinen Familienmitgliedern. Sie geben ihn unter Einstellungen → Familienplan ein.",
+   "familyCodeCopied": "Familiencode kopiert!",
+   "copyButton": "Kopieren",
+   "shareButton": "Teilen",
+   "manageFamilyMembersButton": "Familienmitglieder verwalten",
+   "familyCodeSubtitleOwner": "Tippen Sie unten, um Ihren Familiencode abzurufen",
+   "familyCodeSubtitleMember": "Mit einem Familienplan verbunden",
+   "familyCodeSubtitleJoin": "Mit einem 6-stelligen Code beitreten",
+   "retrieveFamilyCodeButton": "Familiencode abrufen",
+   "loadingText": "Wird geladen...",
+
+   "subscriptionRequired": "Abonnement erforderlich",
+   "subscriptionRequiredMessage": "Sie benötigen ein aktives Abonnement, um einen Familienplan-Code zu erstellen oder anzuzeigen. Bitte abonnieren Sie, um fortzufahren.",
+   "cancelButton": "Abbrechen",
+   "subscribeNow": "Jetzt abonnieren",
+   "familyCodeLoadedSuccess": "Familiencode erfolgreich geladen!",
+   "noFamilyCodeFound": "Kein Familiencode gefunden. Bitte kontaktieren Sie den Support, wenn Sie glauben, dass dies ein Fehler ist.",
+   "errorLoadingFamilyCode": "Fehler beim Laden des Familiencodes",
+
+    "language": "Sprache",
+    "legal": "Rechtliches",
+
+   "shareFamilySubject": "Meinem ScanBite-Familienplan beitreten",
+   "shareFamilyMessageTitle": "Tritt meinem ScanBite-Familienplan bei!",
+   "shareFamilyCodeLabel": "Familiencode",
+   "shareFamilyInstructions": "Öffne ScanBite → Einstellungen → Familienplan → Code eingeben",
+
+   "yourFamilyCode": "Ihr Familiencode",
+   "familyMembers": "Familienmitglieder",
+   "monthlyCostBreakdown": "Monatliche Kostenaufschlüsselung",
+   "basePlan": "Basisplan ({count} Mitglieder)",
+   "@basePlan": {
+     "placeholders": {
+       "count": {
+         "type": "int"
+       }
+     }
+   },
+   "totalMonthlyCost": "Monatliche Gesamtkosten",
+   "owner": "EIGENTÜMER",
+   "copyCode": "Code kopieren",
+
+   "selectLanguageTitle": "Sprache auswählen",
+   "languageSavedMessage": "Sprache gespeichert: {language}",
+   "@languageSavedMessage": {
+     "placeholders": {
+       "language": {
+         "type": "String"
+       }
+     }
+   },
+
+   "rateThisApp": "App bewerten",
+    "rateThisAppSubtitle": "Bewertung & Kommentar hinterlassen",
+    "ratingsInboxTitle": "Bewertungs-Posteingang",
+    "ratingsInboxSubtitle": "Bewertungen anzeigen und beantworten",
+    "rateAppTitle": "App bewerten",
+    "rateAppQuestion": "Wie ist deine Erfahrung?",
+    "rateAppHint": "Schreib einen Kommentar (für alle sichtbar)",
+    "rateAppSubmitting": "Wird gesendet...",
+    "rateAppSubmit": "Senden",
+    "rateAppDisclaimer": "Deine Bewertung wird öffentlich gepostet. Wir öffnen auch eine E-Mail an den Support, damit du eine Antwort erhalten kannst.",
+    "rateAppRecentReviews": "Aktuelle Bewertungen",
+    "rateAppNoReviews": "Noch keine Bewertungen.",
+    "rateAppDeveloperResponse": "Antwort des Entwicklers",
+    "rateAppSignInFirst": "Bitte zuerst anmelden.",
+    "rateAppWriteComment": "Bitte schreib einen Kommentar.",
+    "rateAppCommentTooLong": "Kommentar ist zu lang (max. 500 Zeichen).",
+    "rateAppThanks": "Danke! Deine Bewertung wurde veröffentlicht.",
+    "rateAppFailed": "Bewertung konnte nicht gesendet werden. Bitte erneut versuchen.",
+    "rateAppEmailSubject": "ScanBite App-Bewertung",
+    "adminRatingsTitle": "Bewertungs-Posteingang",
+    "adminRatingsNoReviews": "Noch keine Bewertungen.",
+    "adminRatingsReplyTitle": "Auf Benutzer antworten",
+    "adminRatingsReplyHint": "Schreib deine Antwort...",
+    "adminRatingsCancel": "Abbrechen",
+    "adminRatingsSaveReply": "Antwort speichern",
+    "adminRatingsReplyPosted": "Antwort veröffentlicht.",
+    "adminRatingsYourReply": "Deine Antwort",
+    "adminRatingsEditReply": "Antwort bearbeiten",
+    "adminRatingsAccessDenied": "Sie haben keinen Administratorzugriff.",
+    "adminRatingsReply": "Antworten"
+
+  }

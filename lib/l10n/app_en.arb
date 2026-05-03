@@ -1,0 +1,236 @@
+﻿{
+  "@@locale": "en",
+
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "enableNotifications": "Enable Notifications",
+  "notificationSubtitle": "Get meal reminders and health tips",
+  "notificationsEnabled": "Notifications enabled",
+  "notificationsDisabled": "Notifications disabled",
+  "language": "Language",
+  "legal": "Legal",
+  "privacyPolicy": "Privacy Policy",
+  "privacySubtitle": "How we handle your data",
+  "termsOfService": "Terms of Service",
+  "termsSubtitle": "Our terms and conditions",
+  "about": "About",
+  "appVersion": "App Version",
+
+  "lastUpdatedLabel": "Last Updated",
+  "copyrightLine": "© 2024 ScanBite. All rights reserved.",
+
+  "privacyTitle": "Privacy Policy for ScanBite",
+
+  "privacyIntroTitle": "Introduction",
+  "privacyIntroBody": "ScanBite (\"we,\" \"our,\" or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application.",
+
+  "privacyCollectTitle": "Information We Collect",
+  "privacyCollectBody": "We collect information that you provide directly to us, including:\n\n- Account Information: Name, email address, password\n- Profile Information: Age, gender, height, weight, dietary preferences\n- Health Information: Food scans, nutrition data, meal history\n- Usage Information: App interactions, features used, scan frequency\n- Device Information: Device type, operating system, unique identifiers",
+
+  "privacyUseTitle": "How We Use Your Information",
+  "privacyUseBody": "We use the information we collect to:\n\n- Provide and maintain our services\n- Analyze food images and provide nutrition information\n- Personalize your experience and recommendations\n- Send you notifications and updates\n- Improve our app and develop new features\n- Comply with legal obligations\n- Protect against fraud and abuse",
+
+  "privacySecurityTitle": "Data Storage and Security",
+  "privacySecurityBody": "We implement appropriate technical and organizational measures to protect your personal information:\n\n- Data is encrypted in transit and at rest\n- We use Firebase secure cloud storage\n- Access to personal data is restricted\n- Regular security assessments are performed\n\nHowever, no method of transmission over the internet is 100% secure.",
+
+  "privacyThirdPartyTitle": "Third-Party Services",
+  "privacyThirdPartyBody": "We use the following third-party services:\n\n- Firebase (Google): Authentication, database, storage\n- OpenAI: Food image analysis\n- Analytics: To understand app usage patterns\n\nThese services have their own privacy policies governing their use of information.",
+
+  "privacyRightsTitle": "Your Data Rights",
+  "privacyRightsBody": "You have the right to:\n\n- Access your personal information\n- Correct inaccurate data\n- Request deletion of your data\n- Export your data\n- Opt-out of marketing communications\n- Withdraw consent at any time\n\nTo exercise these rights, contact us at alerttmenow@gmail.com",
+
+  "privacyChildrenTitle": "Children's Privacy",
+  "privacyChildrenBody": "Our service is not intended for children under 13. We do not knowingly collect personal information from children under 13.",
+
+  "privacyRetentionTitle": "Data Retention",
+  "privacyRetentionBody": "We retain your information for as long as your account is active or as needed to provide you services. You may request deletion of your account at any time.",
+
+  "privacyTransfersTitle": "International Data Transfers",
+  "privacyTransfersBody": "Your information may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place.",
+
+  "privacyChangesTitle": "Changes to Privacy Policy",
+  "privacyChangesBody": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last Updated\" date.",
+
+  "privacyContactTitle": "Contact Us",
+  "privacyContactBody": "If you have questions about this Privacy Policy, please contact us:\n\nEmail: alerttmenow@gmail.com\nWebsite: www.an2app.com/scanbite.com\nAddress: www.an2app.com",
+
+  "termsTitle": "Terms of Service",
+
+  "termsAcceptanceTitle": "Acceptance of Terms",
+  "termsAcceptanceBody": "By accessing and using ScanBite, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use our app.",
+
+  "termsServiceDescTitle": "Description of Service",
+  "termsServiceDescBody": "ScanBite provides:\n\n- AI-powered food nutrition analysis\n- Barcode scanning for packaged foods\n- Meal tracking and history\n- Personalized health insights\n- Dietary goal tracking\n- Nutrition recommendations\n\nThe service is provided \"as is\" and \"as available.\"",
+
+  "termsAccountsTitle": "User Accounts",
+  "termsAccountsBody": "To use certain features, you must:\n\n- Create an account with accurate information\n- Maintain the security of your password\n- Be at least 13 years of age\n- Comply with all applicable laws\n\nYou are responsible for all activities under your account.",
+
+  "termsSubscriptionTitle": "Subscription and Payment",
+  "termsSubscriptionBody": "Premium Subscription:\n\n- Monthly subscription: \\${price}/month\n- Free users: {freeScans} scans per month\n- Premium users: Unlimited scans\n- Auto-renewal unless cancelled\n- Refunds subject to app store policies\n\nSubscriptions are managed through your app store account.",
+
+  "@termsSubscriptionBody": {
+    "placeholders": {
+      "price": { "type": "String" },
+      "freeScans": { "type": "String" }
+    }
+  },
+
+  "termsHealthDisclaimerTitle": "Health Disclaimer",
+  "termsHealthDisclaimerBody": "IMPORTANT - PLEASE READ:\n\n- ScanBite is NOT a medical device\n- Information provided is for educational purposes only\n- Do NOT use as a substitute for professional medical advice\n- Consult healthcare providers for medical decisions\n- We do not guarantee accuracy of nutritional information\n- Users with medical conditions should seek professional guidance\n- Allergen detection may not be comprehensive\n\nUSE AT YOUR OWN RISK.",
+
+  "termsAcceptableUseTitle": "Acceptable Use",
+  "termsAcceptableUseBody": "You agree NOT to:\n\n- Violate any laws or regulations\n- Infringe on intellectual property rights\n- Upload malicious code or viruses\n- Attempt to gain unauthorized access\n- Reverse engineer the application\n- Use the app for commercial purposes without permission\n- Harass or harm other users\n- Misrepresent your identity",
+
+  "termsIpTitle": "Intellectual Property",
+  "termsIpBody": "All content, features, and functionality are owned by ScanBite and protected by copyright, trademark, and other intellectual property laws.",
+
+  "termsUserContentTitle": "User Content",
+  "termsUserContentBody": "By uploading content to ScanBite, you grant us a license to use, store, and process your content while retaining ownership.",
+
+  "termsLiabilityTitle": "Limitation of Liability",
+  "termsLiabilityBody": "To the maximum extent permitted by law, we are not liable for indirect, incidental, or consequential damages.",
+
+  "termsIndemnificationTitle": "Indemnification",
+  "termsIndemnificationBody": "You agree to indemnify and hold ScanBite harmless from any claims arising from your use of the app.",
+
+  "termsTerminationTitle": "Termination",
+  "termsTerminationBody": "We may terminate or suspend your account for violations of these terms or at our discretion.",
+
+  "termsChangesTitle": "Changes to Terms",
+  "termsChangesBody": "We reserve the right to modify these terms at any time. Continued use after changes constitutes acceptance.",
+
+  "termsGoverningLawTitle": "Governing Law",
+  "termsGoverningLawBody": "These terms shall be governed by the laws of your jurisdiction.",
+
+  "termsDisputeTitle": "Dispute Resolution",
+  "termsDisputeBody": "Disputes should first be resolved informally before mediation or arbitration.",
+
+  "termsContactTitle": "Contact Information",
+  "termsContactBody": "For questions about these Terms:\n\nEmail: alerttmenow@gmail.com\nWebsite: www.an2app.com/scanbite.com",
+
+  "termsSeverabilityTitle": "Severability",
+  "termsSeverabilityBody": "If any provision is unenforceable, the remaining provisions remain in effect.",
+
+   "aiFoodNutritionScanner": "AI Food Nutrition Scanner",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "signUp": "Sign Up",
+    "dontHaveAnAccount": "Don't have an account?",
+    "pleaseEnterYourEmail": "Please enter your email",
+    "pleaseEnterAValidEmail": "Please enter a valid email",
+    "pleaseEnterYourPassword": "Please enter your password",
+    "passwordMinChars": "Password must be at least 6 characters",
+
+ "testNotification": "Test Notification",
+  "testNotificationSubtitle": "Tap to send a test notification",
+  "testNotificationSent": "Test notification sent! Check your notification tray.",
+  "testButton": "Test",
+
+  "admin": "Admin",
+  "adminPanelTitle": "ADMIN PANEL",
+  "adminPanelSubtitle": "Manage all users",
+
+  "subscriptionSectionTitle": "Subscription",
+  "premiumSubscriptionTitle": "Premium Subscription",
+  "unlimitedScans": "Active - Unlimited Scans",
+  "freeScansRemaining": "{count} free scans remaining",
+  "@freeScansRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+
+
+  "familyPlanTileTitle": "Family Plan",
+  "familyPlanCodeTitle": "Family Plan Code",
+  "refreshCodeTooltip": "Refresh code",
+  "familyCodeRefreshed": "Family code refreshed!",
+  "familyCodeInstruction": "Share this code with your family members. They enter it in Settings → Family Plan.",
+  "familyCodeCopied": "Family code copied!",
+  "copyButton": "Copy",
+  "shareButton": "Share",
+  "manageFamilyMembersButton": "Manage Family Members",
+  "familyCodeSubtitleOwner": "Tap below to retrieve your family code",
+  "familyCodeSubtitleMember": "Connected to a family plan",
+  "familyCodeSubtitleJoin": "Join with a 6-character code",
+  "retrieveFamilyCodeButton": "Retrieve Family Code",
+  "loadingText": "Loading...",
+
+  "language": "Language",
+   "legal": "Legal",
+
+  "subscriptionRequired": "Subscription Required",
+  "subscriptionRequiredMessage": "You need an active subscription to create or view a Family Plan code. Please subscribe to continue.",
+  "cancelButton": "Cancel",
+  "subscribeNow": "Subscribe Now",
+  "familyCodeLoadedSuccess": "Family code loaded successfully!",
+  "noFamilyCodeFound": "No family code found. Please contact support if you believe this is an error.",
+  "errorLoadingFamilyCode": "Error loading family code",
+
+  "shareFamilySubject": "Join My ScanBite Family Plan",
+  "shareFamilyMessageTitle": "Join my ScanBite Family Plan!",
+  "shareFamilyCodeLabel": "Family Code",
+  "shareFamilyInstructions": "Open ScanBite → Settings → Family Plan → Enter Code",
+
+  "yourFamilyCode": "Your Family Code",
+  "familyMembers": "Family Members",
+  "monthlyCostBreakdown": "Monthly Cost Breakdown",
+  "basePlan": "Base Plan ({count} members)",
+  "@basePlan": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "totalMonthlyCost": "Total Monthly Cost",
+  "owner": "OWNER",
+  "copyCode": "Copy Code",
+
+  "selectLanguageTitle": "Select Language",
+  "languageSavedMessage": "Language saved: {language}",
+  "@languageSavedMessage": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+
+     "rateThisApp": "Rate this app",
+       "rateThisAppSubtitle": "Leave a rating & comment",
+       "ratingsInboxTitle": "Ratings Inbox",
+       "ratingsInboxSubtitle": "View & reply to user ratings",
+       "rateAppTitle": "Rate this App",
+       "rateAppQuestion": "How's your experience?",
+       "rateAppHint": "Write a comment (visible to all users)",
+       "rateAppSubmitting": "Submitting...",
+       "rateAppSubmit": "Submit",
+       "rateAppDisclaimer": "Your review will be posted publicly. We'll also open an email to support so you can get a response.",
+       "rateAppRecentReviews": "Recent reviews",
+       "rateAppNoReviews": "No reviews yet.",
+       "rateAppDeveloperResponse": "Developer response",
+       "rateAppSignInFirst": "Please sign in first.",
+       "rateAppWriteComment": "Please write a comment.",
+       "rateAppCommentTooLong": "Comment is too long (max 500 characters).",
+       "rateAppThanks": "Thanks! Your review was posted.",
+       "rateAppFailed": "Failed to submit rating. Please try again.",
+       "rateAppEmailSubject": "ScanBite App Rating",
+       "adminRatingsTitle": "Ratings Inbox",
+       "adminRatingsNoReviews": "No reviews yet.",
+       "adminRatingsReplyTitle": "Reply to user",
+       "adminRatingsReplyHint": "Write your reply...",
+       "adminRatingsCancel": "Cancel",
+       "adminRatingsSaveReply": "Save Reply",
+       "adminRatingsReplyPosted": "Reply posted.",
+       "adminRatingsYourReply": "Your reply",
+       "adminRatingsEditReply": "Edit Reply",
+        "adminRatingsAccessDenied": "You do not have admin access.",
+       "adminRatingsReply": "Reply"
+
+     }
+

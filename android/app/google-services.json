@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "246955389010",
+    "project_id": "scanbite-a7d63",
+    "storage_bucket": "scanbite-a7d63.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246955389010:android:a36eb6467ccf7d1cb5ef8b",
+        "android_client_info": {
+          "package_name": "com.an2app.scanbite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJf6i7F7juyycmy5F8Z1zM0_MnZeq28ko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246955389010:android:dd04ac2604d29418b5ef8b",
+        "android_client_info": {
+          "package_name": "com.example.scanbite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJf6i7F7juyycmy5F8Z1zM0_MnZeq28ko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
