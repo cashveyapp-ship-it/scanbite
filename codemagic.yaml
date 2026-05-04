@@ -28,7 +28,12 @@ workflows:
 
       - name: Build iOS Simulator
         script: |
-          flutter build ios --simulator --debug
+          flutter build ios --simulator --debug --target lib/main.dart
+
+      - name: Zip Simulator App
+        script: |
+          cd build/ios/iphonesimulator
+          zip -r Runner.app.zip Runner.app
 
       - name: Build iOS IPA
         script: |
@@ -36,7 +41,7 @@ workflows:
 
     artifacts:
       - build/ios/ipa/*.ipa
-      - build/ios/iphonesimulator/Runner.app
+      - build/ios/iphonesimulator/Runner.app.zip
 
     publishing:
       app_store_connect:
