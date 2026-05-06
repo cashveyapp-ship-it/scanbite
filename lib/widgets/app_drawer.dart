@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import '../widgets/animated_how_it_works_tile.dart';
 import '../screens/ai_food_question_screen.dart';
+import 'dart:io';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -130,7 +131,7 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async {
                     Navigator.pop(context);
                     await launchUrl(
-                      Uri.parse('https://share.synthesia.io/5400ad47-f48e-4c83-97c3-de7243debfca'),
+                      Uri.parse('Scanbite - Scan Your Food with AI (5 Free Scans) - Video generated with Synthesia'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
@@ -146,9 +147,15 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async {
                     Navigator.pop(context);
 
-                    final Uri url = Uri.parse(
+                    final Uri url = Platform.isIOS
+                        ? Uri.parse(
+                      'itms-apps://apps.apple.com/app/id6766014924?action=write-review',
+                    )
+                        : Uri.parse(
                       'https://play.google.com/store/apps/details?id=com.an2app.scanbite',
                     );
+
+                    final String storeName = Platform.isIOS ? 'App Store' : 'Play Store';
 
                     try {
                       final opened = await launchUrl(
@@ -158,19 +165,18 @@ class AppDrawer extends StatelessWidget {
 
                       if (!opened && context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Unable to open Play Store')),
+                          SnackBar(content: Text('Unable to open $storeName')),
                         );
                       }
                     } catch (_) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Unable to open Play Store')),
+                          SnackBar(content: Text('Unable to open $storeName')),
                         );
                       }
                     }
                   },
                 ),
-
 
 
                 const Divider(),
