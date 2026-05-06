@@ -220,8 +220,12 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async {
                     Navigator.pop(context);
 
+                    final String appLink = Platform.isIOS
+                        ? 'https://apps.apple.com/app/id6766014924'
+                        : 'https://play.google.com/store/apps/details?id=com.an2app.scanbite&pcampaignid=web_share';
+
                     await Share.share(
-                      'https://play.google.com/store/apps/details?id=com.an2app.scanbite&pcampaignid=web_share',
+                      'Check out ScanBite — an AI Food Nutrition Scanner:\n$appLink',
                       subject: 'ScanBite',
                     );
                   },
