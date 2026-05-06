@@ -131,7 +131,7 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async {
                     Navigator.pop(context);
                     await launchUrl(
-                      Uri.parse('Scanbite - Scan Your Food with AI (5 Free Scans) - Video generated with Synthesia'),
+                      Uri.parse('https://share.synthesia.io/bec9e754-e7cf-41ab-9176-44f636d29d0b'),
                       mode: LaunchMode.externalApplication,
                     );
                   },
