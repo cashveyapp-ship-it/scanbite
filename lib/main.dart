@@ -13,6 +13,7 @@ import 'gen_l10n/app_localizations.dart';
 import 'services/notification_service.dart';
 import 'services/subscription_service.dart';
 import 'screens/auth_gate.dart';
+import 'firebase_options.dart';
 
 // TODO: uncomment both lines when ready for App Check
  import 'package:flutter/foundation.dart';
@@ -21,7 +22,9 @@ import 'screens/auth_gate.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // TODO: uncomment when ready for App Check
    await FirebaseAppCheck.instance.activate(
