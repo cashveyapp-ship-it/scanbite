@@ -43,45 +43,38 @@ class FamilyService {
   // Create family plan when user subscribes
   Future<String> createFamilyPlan(String ownerId) async {
     try {
-      String familyCode = _generateFamilyCode();
 
-      // Make sure code is unique
-      bool codeExists = true;
-      while (codeExists) {
-        final snapshot = await _firestore
-            .collection('users')
-            .where('familyCode', isEqualTo: familyCode)
-            .limit(1)
-            .get();
+      print('🔥 createFamilyPlan STARTED');
 
-        if (snapshot.docs.isEmpty) {
-          codeExists = false;
-        } else {
-          familyCode = _generateFamilyCode();
-        }
-      }
+      // Generate family code
+      final familyCode = _generateFamilyCode();
 
+      // Update owner profile directly
       await _firestore.collection('users').doc(ownerId).update({
         'isFamilyPlanOwner': true,
         'familyCode': familyCode,
         'familyPlanOwnerId': ownerId,
         'familyMemberIds': [ownerId],
         'totalFamilyMembers': 1,
-        // ✅ FIX: set isPremium on owner so isSubscriptionActive getter works
+
+        // Premium access
         'isPremium': true,
         'isSubscriptionActive': true,
+
+        // Extra member tracking
         'extraMemberSlots': 0,
         'extraMemberCost': 0.0,
       });
 
+      print('🔥 Firestore family update SUCCESS');
       print('✅ Family plan created with code: $familyCode');
+
       return familyCode;
     } catch (e) {
       print('❌ Error creating family plan: $e');
       throw Exception('Failed to create family plan: $e');
     }
   }
-
   // ✅ Call this AFTER $1.00 "extra slot" purchase succeeds
   Future<void> addExtraMemberSlot(String ownerId, {int quantity = 1}) async {
     try {
