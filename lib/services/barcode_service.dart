@@ -43,8 +43,7 @@ class BarcodeService {
             healthScore: _calculateHealthScore(nutriments),
 
             ingredients: _extractIngredients(product['ingredients_text'] ?? ''),
-            aiInsights: (product['ingredients_text'] ?? 'No ingredient information available').toString(),
-
+            aiInsights: _buildAiInsights(product, nutriments),
             // Required by your model but not guaranteed by OpenFoodFacts
             healthBenefits: const [],
             healthRisks: const [],

@@ -212,6 +212,7 @@ class AppDrawer extends StatelessWidget {
                 ),
 
                 const Divider(),
+
                 ListTile(
                   leading: const Icon(Icons.share),
                   title: const Text('Invite a Friend'),

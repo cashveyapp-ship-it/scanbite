@@ -72,7 +72,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
       if (!mounted) return;
       setState(() {
         _dailyTip =
-        'Start scanning your meals to get AI-powered insights tailored to your personal health goals and dietary preferences!';
+        'Start scanning your meals to get AI-powered insights tailored to your nutrition goals and dietary preferences!';
         _dailyTipCategory = 'general';
         _loadingTip = false;
       });
@@ -318,7 +318,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
               _buildInsightCard(
                 'Meal Timing',
-                'Try eating your last meal 3 hours before bed for better digestion and sleep.',
+                'Try eating your last meal 3 hours before bed for general wellness and routine awareness.',
                 Icons.schedule,
                 Colors.purple,
               ),
@@ -334,7 +334,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                 _buildInsightCard(
                   'Blood Sugar Awareness',
                   'Review carbohydrate and sugar content for informational purposes only. Always consult a qualified healthcare professional.',
-                  Icons.health_and_safety,
+                  Icons.info_outline,
                   Colors.red,
                 ),
 
@@ -385,7 +385,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
       return 'Prioritize whole foods, fruits, vegetables, and lean proteins. Use meal scanning to ensure you\'re getting balanced nutrition every day!';
     }
 
-    return 'Start scanning your meals to get AI-powered insights tailored to your personal health goals and dietary preferences!';
+    return 'Start scanning your meals to get AI-powered insights tailored to your nutrition goals and dietary preferences!';
   }
 
   Widget _buildInsightCard(

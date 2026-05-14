@@ -10,6 +10,34 @@ class ResultScreen extends StatelessWidget {
 
   const ResultScreen({Key? key, required this.scan}) : super(key: key);
 
+  // 👇 ADD THIS HERE
+  void _showNutritionSourcesDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Nutrition Sources & Disclaimer'),
+        content: const SingleChildScrollView(
+          child: Text(
+            'Nutritional information is estimated using AI analysis and publicly available food data sources, including USDA FoodData Central and FDA nutrition guidance.\n\n'
+                'ScanBite provides general nutrition insights for informational and educational purposes only. Results may not be exact and should not be considered medical advice, diagnosis, or treatment guidance.\n\n'
+                'For medical, allergy, diet, or health-related concerns, please consult a qualified healthcare professional.\n\n'
+                'Sources:\n'
+                '• USDA FoodData Central: https://fdc.nal.usda.gov/\n'
+                '• FDA Nutrition Facts and Labeling Guidance: https://www.fda.gov/food',
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final nutrition = scan.nutritionData;
@@ -111,7 +139,7 @@ class ResultScreen extends StatelessWidget {
 
                   if (nutrition.healthBenefits.isNotEmpty)
                     _buildListCard(
-                      'Health Benefits',
+                      'Nutrition Insights',
                       nutrition.healthBenefits,
                       AppConstants.successColor,
                       Icons.check_circle,
@@ -119,7 +147,7 @@ class ResultScreen extends StatelessWidget {
 
                   if (nutrition.healthRisks.isNotEmpty)
                     _buildListCard(
-                      'Health Risks',
+                      'Nutrition Considerations',
                       nutrition.healthRisks,
                       AppConstants.dangerColor,
                       Icons.warning,
@@ -130,6 +158,54 @@ class ResultScreen extends StatelessWidget {
 
                   if (nutrition.ingredients.isNotEmpty)
                     _buildIngredientsCard(nutrition.ingredients),
+
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.blue.shade100,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Not medical advice',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 6),
+
+                        Text(
+                          'Nutrition values are AI-generated estimates and may vary. Sources include USDA FoodData Central and FDA nutrition guidance.',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        TextButton.icon(
+                          onPressed: () => _showNutritionSourcesDialog(context),
+                          icon: const Icon(
+                            Icons.info_outline,
+                            size: 18,
+                          ),
+                          label: const Text(
+                            'View Nutrition Sources',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
 
                   const SizedBox(height: 80),
                 ],
@@ -251,7 +327,7 @@ class ResultScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Health Score',
+                    'AI Nutrition Score',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 4),
@@ -382,7 +458,7 @@ class ResultScreen extends StatelessWidget {
           Row(children: [
             Icon(Icons.warning, color: AppConstants.dangerColor),
             const SizedBox(width: 8),
-            const Text('Allergen Warning', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Allergen Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ]),
           const SizedBox(height: 12),
           Wrap(

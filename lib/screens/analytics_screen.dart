@@ -176,7 +176,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                   const SizedBox(height: 8),
                   _buildFeatureItem('📊 Calorie trends over time'),
-                  _buildFeatureItem('🎯 Health risk scoring'),
+                  _buildFeatureItem('🎯 Nutrition awareness scoring'),
                   _buildFeatureItem('🥗 Meal distribution charts'),
                   _buildFeatureItem('💪 Nutrition breakdown'),
                 ],
@@ -257,7 +257,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         const SizedBox(width: 12),
         Expanded(
           child: _buildSummaryCard(
-            'Avg Health',
+            'Avg Nutrition',
             '${_analytics!.avgHealthScore.toInt()}',
             Icons.favorite,
             AppConstants.successColor,
@@ -360,7 +360,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Widget _buildRiskScoreTrendChart() {
     if (_analytics!.riskScoreTrend.isEmpty) {
-      return _buildEmptyChart('No risk data', 'Scan meals to track health risks');
+      return _buildEmptyChart('No nutrition score data', 'Scan meals to view nutrition score trends');
     }
 
     return Card(
@@ -373,9 +373,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.health_and_safety, color: AppConstants.dangerColor),
+                Icon(Icons.analytics, color: AppConstants.dangerColor),
                 const SizedBox(width: 8),
-                const Text('Health Risk Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text('Nutrition Score Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 24),

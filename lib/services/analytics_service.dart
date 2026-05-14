@@ -202,11 +202,11 @@ class AnalyticsService {
       }
 
       if (analytics.avgHealthScore >= 70) {
-        return 'Great job! Your meals have been healthy this week. Keep up the good work!';
+        return 'Great job! Your meals show strong nutrition scores this week. Keep up the good work!';
       } else if (analytics.avgHealthScore >= 50) {
-        return 'You\'re doing well! Try adding more vegetables and lean proteins to boost your health score.';
+        return 'You\'re doing well! Try adding more vegetables and lean proteins to support your nutrition score.';
       } else {
-        return 'Consider choosing healthier options. Focus on whole foods, fruits, and vegetables for better nutrition.';
+        return 'Consider choosing more balanced options. Focus on whole foods, fruits, and vegetables for general nutrition awareness.';
       }
     } catch (e) {
       print('Error generating daily tip: $e');

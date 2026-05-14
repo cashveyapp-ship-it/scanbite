@@ -12,6 +12,7 @@ import '../utils/constants.dart';
 import '../widgets/custom_button.dart';
 import 'family_management_screen.dart';
 
+
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({Key? key}) : super(key: key);
 
@@ -80,10 +81,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 16),
-                  Text('Redirecting to Google Play...'),
+                  Text('Processing purchase......'),
                   SizedBox(height: 8),
                   Text(
-                    'Complete your payment in the Google Play window',
+                    'Complete your payment in the purchase window',
                     style: TextStyle(fontSize: 12, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
@@ -372,7 +373,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   Text('Processing subscription...'),
                   SizedBox(height: 8),
                   Text(
-                    '(Test Mode - No payment required)',
+                    '(Please wait while we process your purchase)',
                     style: TextStyle(fontSize: 12, color: Colors.green),
                   ),
                 ],
@@ -614,7 +615,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Test Mode: Google Play not available. Using test subscriptions.',
+                          'Purchases are temporarily unavailable. Please try again later.',
                           style: TextStyle(fontSize: 12),
                         ),
                       ),
@@ -735,11 +736,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               const SizedBox(height: 24),
               Center(
                 child: Text(
-                  _useGooglePlay
-                      ? 'Payment will be charged to your Google Play account. Subscription automatically renews unless cancelled 24 hours before the end of the current period.'
-                      : 'Test Mode: No actual payment required.',
+                  'Payment will be charged to your account. Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.',
                   style: TextStyle(
-                      fontSize: 11, color: Colors.grey.shade600),
+                    fontSize: 11,
+                    color: Colors.grey.shade600,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -956,8 +957,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   SnackBar(
                     content: Text(
                       !_useGooglePlay
-                          ? 'Google Play Billing not available yet (test mode).'
-                          : 'Single-scan product not found. Make sure it is ACTIVE in Play Console and the Product ID matches.',
+                          ? 'Purchases are temporarily unavailable. Please try again later.'
+                          : 'Single-scan product is currently unavailable. Please try again later.',
                     ),
                     backgroundColor: Colors.red,
                   ),
