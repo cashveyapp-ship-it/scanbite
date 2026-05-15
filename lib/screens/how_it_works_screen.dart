@@ -36,9 +36,9 @@ class HowItWorksScreen extends StatelessWidget {
 
           _HowItWorksCard(
             icon: Icons.auto_awesome,
-            title: 'AI Food Analysis',
+            title: 'AI Nutrition Estimates',
             description:
-            'ScanBite estimates calories, macros, and nutrition details.',
+            'ScanBite provides estimated nutrition information from AI analysis and public food databases.',
             onTap: () {
               Navigator.push(
                 context,
@@ -49,9 +49,9 @@ class HowItWorksScreen extends StatelessWidget {
 
           _HowItWorksCard(
             icon: Icons.favorite,
-            title: 'Health Score',
+            title: 'AI Nutrition Score',
             description:
-            'Get a simple score to help you make smarter food choices.',
+            'View an estimated nutrition score based on ingredient and nutrition information.',
             onTap: () {
               Navigator.push(
                 context,
@@ -62,9 +62,9 @@ class HowItWorksScreen extends StatelessWidget {
 
           _HowItWorksCard(
             icon: Icons.history,
-            title: 'Track Your Meals',
+            title: 'Meal History',
             description:
-            'Review your scan history and eating patterns over time.',
+            'Review your saved scan history and nutrition activity..',
             onTap: () {
               Navigator.push(
                 context,

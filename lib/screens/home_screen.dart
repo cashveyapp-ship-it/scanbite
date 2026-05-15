@@ -320,32 +320,51 @@ class HomeTabScreen extends StatelessWidget {
                 icon: Icons.calculate,
                 title: 'AI Food Analysis',
                 description:
-                'Scan food using camera, barcode, or gallery to receive calorie estimates, and AI-powered health insights',
+                'Scan food using camera, barcode, or gallery to receive estimated nutrition information from AI analysis and public food databases',
               ),
               _buildFeatureCard(
                 icon: Icons.favorite,
-                title: 'Food Health Score',
+                title: 'AI Nutrition Score',
                 description: 'Know how healthy your food is',
               ),
               _buildFeatureCard(
                 icon: Icons.warning,
-                title: 'Allergen Detection',
-                description: 'Identify potential allergens',
+                title: 'Ingredient Alerts',
+                description: 'Highlights common ingredient and allergen information from food databases.',
               ),
               _buildFeatureCard(
                 icon: Icons.local_hospital,
-                title: 'Blood Sugar Awareness',
+                title: 'Sugar & Carb Information',
                 description:
-                'Review sugar and carbohydrate content for informational purposes only.',
+                'Estimated sugar and carbohydrate values from public nutrition databases..',
               ),
 
               const SizedBox(height: 16),
 
               const Center(
-                child: Text(
-                  'Educational information only. Not medical advice.',
-                  style: TextStyle(fontSize: 11, color: Colors.grey),
-                  textAlign: TextAlign.center,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Nutrition estimates sourced from USDA FoodData Central and public nutrition databases.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'Informational only — not medical advice.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

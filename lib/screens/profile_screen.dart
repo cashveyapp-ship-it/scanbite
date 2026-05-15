@@ -112,13 +112,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _getGoalText(UserGoal? goal) {
     switch (goal) {
       case UserGoal.loseWeight:
-        return 'Lose Weight';
+        return 'Nutrition Goal';
       case UserGoal.maintainWeight:
         return 'Maintain Weight';
       case UserGoal.gainMuscle:
         return 'Gain Muscle';
       case UserGoal.healthFocused:
-        return 'Health Focused';
+        return 'Balanced Nutrition';
       default:
         return 'Set your goal';
     }
@@ -131,16 +131,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   String _getRiskLabel(int score) {
-    if (score < 30) return 'Low Risk';
-    if (score < 60) return 'Medium';
-    return 'High Risk';
+    if (score < 30) return 'Balanced';
+    if (score < 60) return 'Moderate';
+    return 'High';
   }
 
   String _getBMICategory(double bmi) {
-    if (bmi < 18.5) return 'Underweight';
-    if (bmi < 25) return 'Normal';
-    if (bmi < 30) return 'Overweight';
-    return 'Obese';
+    if (bmi < 18.5) return 'Lower Range';
+    if (bmi < 25) return 'Balanced';
+    if (bmi < 30) return 'Above Average';
+    return 'Higher Range';
   }
 
   @override
@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile & Insights'),
+        title: const Text('Profile & Nutrition'),
         backgroundColor: AppConstants.primaryColor,
         foregroundColor: Colors.white,
         actions: [
@@ -282,15 +282,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               const SizedBox(height: 16),
-
               Center(
-                child: Text(
-                  'Educational information only. Not medical advice.',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'Nutrition estimates sourced from USDA FoodData Central and public nutrition databases.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'Informational only — not medical advice.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
 
@@ -421,7 +436,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _buildStatCard(
-                    'Risk Score',
+                    'Nutrition Balance',
                     '$_todayRiskScore',
                     _getRiskLabel(_todayRiskScore),
                     Icons.health_and_safety,
@@ -437,14 +452,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Expanded(
                   child: profile.bmi != null
                       ? _buildStatCard(
-                    'BMI',
+                    'Body Metrics',
                     profile.bmi!.toStringAsFixed(1),
                     _getBMICategory(profile.bmi!),
                     Icons.monitor_weight,
                     AppConstants.primaryColor,
                   )
                       : _buildStatCard(
-                    'BMI',
+                    'Body Metrics',
                     '---',
                     'Set Info',
                     Icons.monitor_weight,
@@ -661,7 +676,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Health Profile',
+                'Nutrition Preferences',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
@@ -672,8 +687,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: AppConstants.primaryColor,
               child: Icon(Icons.health_and_safety, color: Colors.white, size: 20),
             ),
-            title: const Text('Blood Sugar Awareness'),
-            subtitle: Text(profile.isDiabetic ? 'Active' : 'Inactive'),
+            title: const Text('Sugar & Carb Estimates'),
+            subtitle: const Text(
+              'Displays estimated sugar and carbohydrate values from public nutrition databases.',
+            ),
             value: profile.isDiabetic,
             activeColor: AppConstants.primaryColor,
             onChanged: (value) {
@@ -686,8 +703,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: AppConstants.primaryColor,
               child: Icon(Icons.warning, color: Colors.white, size: 20),
             ),
-            title: const Text('Allergen Alerts'),
-            subtitle: Text('${profile.allergyList.length} allergens tracked'),
+            title: const Text('Ingredient Alerts'),
+            subtitle: Text('${profile.allergyList.length} ingredient preference saved'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => _showAllergenDialog(profile),
           ),
@@ -697,8 +714,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: AppConstants.primaryColor,
               child: Icon(Icons.restaurant, color: Colors.white, size: 20),
             ),
-            title: const Text('Dietary Restrictions'),
-            subtitle: Text('${profile.dietaryRestrictions.length} restrictions'),
+            title: const Text('Food Preferences'),
+            subtitle: Text('${profile.dietaryRestrictions.length} preference selected'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => _showDietaryDialog(profile),
           ),
@@ -1015,7 +1032,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return StatefulBuilder(
           builder: (_, setDialogState) {
             return AlertDialog(
-              title: const Text('Dietary Restrictions'),
+              title: const Text('Food Preferences'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

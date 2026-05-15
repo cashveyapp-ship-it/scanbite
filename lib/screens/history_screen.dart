@@ -127,16 +127,50 @@ class _HistoryScreenState extends State<HistoryScreen> {
         onRefresh: () async => _loadScans(),
         child: ListView.builder(
           padding: const EdgeInsets.all(16.0),
-          itemCount: scans.length,
+          itemCount: scans.length + 1,
           itemBuilder: (context, index) {
-            print('🖼️ [HISTORY UI] Building card $index: ${scans[index].nutritionData.foodName}');
+            if (index == scans.length) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 100),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Nutrition estimates sourced from USDA FoodData Central and public nutrition databases.',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 6),
+                        Text(
+                          'Informational only — not medical advice.',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            print(
+              '🖼️ [HISTORY UI] Building card $index: ${scans[index].nutritionData.foodName}',
+            );
+
             return _buildScanCard(scans[index], scanProvider);
           },
         ),
       ),
     );
   }
-
   Widget _buildScanCard(FoodScan scan, ScanProvider scanProvider) {
     final nutritionData = scan.nutritionData;
 
@@ -375,3 +409,5 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
   }
 }
+
+

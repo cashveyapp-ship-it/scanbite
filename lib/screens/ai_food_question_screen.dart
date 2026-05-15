@@ -152,7 +152,7 @@ End with one simple recommendation.
     return Scaffold(
       backgroundColor: const Color(0xFFF7FAF3),
       appBar: AppBar(
-        title: const Text('Ask AI About Food'),
+        title: const Text('Ask AI About Nutrition'),
         backgroundColor: AppConstants.primaryColor,
         foregroundColor: Colors.white,
       ),
@@ -165,7 +165,7 @@ End with one simple recommendation.
                 TextField(
                   controller: _controller,
                   decoration: InputDecoration(
-                    hintText: 'Ask something like: Is rice healthy?',
+                    hintText: 'Ask about ingredients, calories, or nutrition information?',
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -182,21 +182,21 @@ End with one simple recommendation.
                   runSpacing: 8,
                   children: [
                     ActionChip(
-                      label: const Text('Is rice healthy?'),
+                      label: const Text('Rice nutrition facts?'),
                       onPressed:
                       _loading ? null : () => _quickAsk('Is rice healthy?'),
                     ),
                     ActionChip(
-                      label: const Text('Is pizza healthy?'),
+                      label: const Text('Pizza nutrition estimate?'),
                       onPressed:
-                      _loading ? null : () => _quickAsk('Is pizza healthy?'),
+                      _loading ? null : () => _quickAsk('Pizza nutrition estimate?'),
                     ),
                     ActionChip(
-                      label: const Text('Best food for weight loss'),
+                      label: const Text('Foods with lower calorie estimates'),
                       onPressed: _loading
                           ? null
                           : () => _quickAsk(
-                          'What are the best foods for weight loss?'),
+                          'Examples of lower calorie foods'),
                     ),
                   ],
                 ),

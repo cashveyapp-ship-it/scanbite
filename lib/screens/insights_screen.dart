@@ -332,7 +332,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
               if (userProfile?.isDiabetic == true)
                 _buildInsightCard(
-                  'Blood Sugar Awareness',
+                  'Sugar & Carb Information',
                   'Review carbohydrate and sugar content for informational purposes only. Always consult a qualified healthcare professional.',
                   Icons.info_outline,
                   Colors.red,
