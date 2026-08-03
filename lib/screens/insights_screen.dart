@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
@@ -120,9 +120,23 @@ class _InsightsScreenState extends State<InsightsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Insights'),
-        backgroundColor: AppConstants.primaryColor,
-        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+            size: 20,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'AI Insights',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
           IconButton(
             tooltip: 'Export scan history',
@@ -144,7 +158,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
                 scanProvider.loadUserScans(uid);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Loading scan history… try export again in a moment.')),
+                  const SnackBar(content: Text('Loading scan historyâ€¦ try export again in a moment.')),
                 );
                 return;
               }
@@ -412,3 +426,4 @@ class _InsightsScreenState extends State<InsightsScreen> {
     );
   }
 }
+

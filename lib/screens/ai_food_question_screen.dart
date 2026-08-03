@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 import '../services/ai/scanbite_ai_gateway.dart';
@@ -60,7 +60,7 @@ End with one simple recommendation.
     }
   }
 
-  // 🔥 CLEAN + FORMAT AI RESPONSE
+  // ðŸ”¥ CLEAN + FORMAT AI RESPONSE
   String _cleanAiResponse(String raw) {
     String text = raw.trim();
 
@@ -86,7 +86,7 @@ End with one simple recommendation.
               buffer.writeln('\n${_capitalize(cleanKey)}:');
               format(val);
             } else {
-              buffer.writeln('• ${_capitalize(cleanKey)}: $val');
+              buffer.writeln('â€¢ ${_capitalize(cleanKey)}: $val');
             }
           });
         } else if (value is List) {
@@ -94,7 +94,7 @@ End with one simple recommendation.
             if (item is Map || item is List) {
               format(item);
             } else {
-              buffer.writeln('• $item');
+              buffer.writeln('â€¢ $item');
             }
           }
         }
@@ -132,7 +132,7 @@ End with one simple recommendation.
         padding: const EdgeInsets.all(14),
         constraints: const BoxConstraints(maxWidth: 320),
         decoration: BoxDecoration(
-          color: isUser ? AppConstants.primaryColor : Colors.grey.shade100,
+          color: isUser ? AppConstants.primaryColor : const Color(0xFFF2F2F7),
           borderRadius: BorderRadius.circular(18),
         ),
         child: Text(
@@ -150,11 +150,17 @@ End with one simple recommendation.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAF3),
+      backgroundColor: const Color(0xFFF6F7F3),
       appBar: AppBar(
-        title: const Text('Ask AI About Nutrition'),
-        backgroundColor: AppConstants.primaryColor,
-        foregroundColor: Colors.white,
+        title: const Text(
+          'Ask AI About Nutrition',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: Column(
         children: [
@@ -169,7 +175,7 @@ End with one simple recommendation.
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(18),
                     ),
                   ),
                   maxLines: 2,
@@ -208,11 +214,11 @@ End with one simple recommendation.
                   child: ElevatedButton(
                     onPressed: _loading ? null : _askQuestion,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppConstants.primaryColor,
-                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
                     child: _loading
@@ -220,7 +226,7 @@ End with one simple recommendation.
                       height: 22,
                       width: 22,
                       child: CircularProgressIndicator(
-                        color: Colors.white,
+                        color: Colors.purple,
                         strokeWidth: 2,
                       ),
                     )
@@ -247,7 +253,10 @@ End with one simple recommendation.
             child: Text(
               'Educational information only. Not medical advice.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 12,
+                color: Color(0xFF8E8E93),
+              ),
             ),
           ),
         ],
@@ -255,3 +264,5 @@ End with one simple recommendation.
     );
   }
 }
+
+

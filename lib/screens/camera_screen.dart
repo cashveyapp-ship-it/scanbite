@@ -28,7 +28,7 @@ class _CameraScreenState extends State<CameraScreen> {
   int _selectedScanMode = 0;
   MobileScannerController? _barcodeScannerController;
   bool _isSwitchingMode = false;
-  bool _isProcessingBarcode = false; // ✅ prevent duplicate detections
+  bool _isProcessingBarcode = false; // âœ… prevent duplicate detections
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
       _cameras = await availableCameras();
       if (_cameras != null && _cameras!.isNotEmpty) {
-        // ✅ SPEED: medium resolution — enough detail for AI, far smaller image
+        // âœ… SPEED: medium resolution â€” enough detail for AI, far smaller image
         final controller = CameraController(
           _cameras![0],
           ResolutionPreset.medium,
@@ -127,9 +127,9 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // CAMERA SCAN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Future<void> _captureAndAnalyze() async {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
@@ -147,9 +147,9 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // GALLERY SCAN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Future<void> _pickFromGallery() async {
     try {
@@ -166,13 +166,13 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-  // ─────────────────────────────────────────────
-  // CORE ANALYSIS — optimized for speed
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // CORE ANALYSIS â€” optimized for speed
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Future<void> _analyzeAndShowResult(String imagePath,
       {required bool isCamera}) async {
-    // Single loading dialog — never replaced mid-flow
+    // Single loading dialog â€” never replaced mid-flow
     _showLoadingDialog('Analyzing food...');
 
     try {
@@ -184,20 +184,20 @@ class _CameraScreenState extends State<CameraScreen> {
       final userProfile = authProvider.userProfile;
       final userContext = userProfile != null
           ? {
-        'age': userProfile.age,
-        'goal': userProfile.goal?.name,
-        'isDiabetic': userProfile.isDiabetic,
-        'allergyList': userProfile.allergyList,
-        'dietaryRestrictions': userProfile.dietaryRestrictions,
-        'dailyCalorieGoal': userProfile.dailyCalorieGoal,
-      }
+              'age': userProfile.age,
+              'goal': userProfile.goal?.name,
+              'isDiabetic': userProfile.isDiabetic,
+              'allergyList': userProfile.allergyList,
+              'dietaryRestrictions': userProfile.dietaryRestrictions,
+              'dailyCalorieGoal': userProfile.dailyCalorieGoal,
+            }
           : null;
 
       final imageFile = File(imagePath);
 
-      // ✅ SPEED: run AI analysis and image upload IN PARALLEL.
+      // âœ… SPEED: run AI analysis and image upload IN PARALLEL.
       // Previously upload ran AFTER AI finished, adding up to 15s.
-      // Now both complete simultaneously — we only wait for the slower one.
+      // Now both complete simultaneously â€” we only wait for the slower one.
       final results = await Future.wait([
         scanProvider.analyzeFoodImage(imageFile, userContext),
         _firebaseService
@@ -205,12 +205,11 @@ class _CameraScreenState extends State<CameraScreen> {
             .timeout(
           const Duration(seconds: 20),
           onTimeout: () {
-            print('⚠️ Upload timed out — using local path');
+            print('âš ï¸ Upload timed out â€” using local path');
             return imagePath;
           },
-        )
-            .catchError((e) {
-          print('⚠️ Upload failed — using local path: $e');
+        ).catchError((e) {
+          print('âš ï¸ Upload failed â€” using local path: $e');
           return imagePath;
         }),
       ]);
@@ -226,17 +225,17 @@ class _CameraScreenState extends State<CameraScreen> {
         authProvider.user!.uid,
       );
 
-      // Consume scan (non-blocking — errors are swallowed in provider)
+      // Consume scan (non-blocking â€” errors are swallowed in provider)
       authProvider.consumeOneScanIfNeeded().catchError((e) {
-        print('⚠️ consumeOneScanIfNeeded: $e');
+        print('âš ï¸ consumeOneScanIfNeeded: $e');
       });
 
-      // Save in background — no reload after save
+      // Save in background â€” no reload after save
       _saveInBackground(scan, scanProvider);
 
       if (!mounted) return;
 
-      // ✅ Single pop — straight to results, no intermediate dialog
+      // âœ… Single pop â€” straight to results, no intermediate dialog
       Navigator.pop(context);
 
       await Navigator.pushReplacement(
@@ -244,7 +243,7 @@ class _CameraScreenState extends State<CameraScreen> {
         MaterialPageRoute(builder: (context) => ResultScreen(scan: scan)),
       );
     } catch (e) {
-      print('❌ Analysis error: $e');
+      print('âŒ Analysis error: $e');
       if (mounted) {
         Navigator.pop(context);
         _showError('Analysis failed. Please try again.');
@@ -252,12 +251,12 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // BARCODE SCAN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Future<void> _handleBarcodeDetection(String barcode) async {
-    if (_isProcessingBarcode) return; // ✅ ignore duplicates while processing
+    if (_isProcessingBarcode) return; // âœ… ignore duplicates while processing
     _isProcessingBarcode = true;
 
     _barcodeScannerController?.stop();
@@ -294,7 +293,7 @@ class _CameraScreenState extends State<CameraScreen> {
         MaterialPageRoute(builder: (context) => ResultScreen(scan: scan)),
       );
     } catch (e) {
-      print('❌ Barcode error: $e');
+      print('âŒ Barcode error: $e');
       if (mounted) {
         Navigator.pop(context);
         final msg = e.toString();
@@ -309,19 +308,19 @@ class _CameraScreenState extends State<CameraScreen> {
         }
       }
     } finally {
-      _isProcessingBarcode = false; // ✅ allow next scan
+      _isProcessingBarcode = false; // âœ… allow next scan
     }
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // HELPERS
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   FoodScan _createScanFromResult(
-      Map<String, dynamic> result,
-      String imageUrl,
-      String userId,
-      ) {
+    Map<String, dynamic> result,
+    String imageUrl,
+    String userId,
+  ) {
     final nutritionData = NutritionData(
       foodName: result['foodName'] ?? 'Unknown Food',
       calories: result['calories'] ?? 0,
@@ -352,11 +351,11 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _saveInBackground(FoodScan scan, ScanProvider scanProvider) {
-    // ✅ No loadUserScans after save — real-time stream handles the update
+    // âœ… No loadUserScans after save â€” real-time stream handles the update
     _firebaseService.saveScan(scan).then((_) {
-      print('✅ Scan saved to cloud');
+      print('âœ… Scan saved to cloud');
     }).catchError((e) {
-      print('⚠️ Save failed (will sync later): $e');
+      print('âš ï¸ Save failed (will sync later): $e');
     });
   }
 
@@ -401,15 +400,19 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // UI
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: const Text('Scan Food'),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
@@ -454,8 +457,8 @@ class _CameraScreenState extends State<CameraScreen> {
             child: _selectedScanMode == 0
                 ? _buildCameraView()
                 : _selectedScanMode == 1
-                ? _buildBarcodeView()
-                : _buildGalleryView(),
+                    ? _buildBarcodeView()
+                    : _buildGalleryView(),
           ),
           if (_selectedScanMode == 0)
             Container(
@@ -544,8 +547,7 @@ class _CameraScreenState extends State<CameraScreen> {
             width: 250,
             height: 250,
             decoration: BoxDecoration(
-              border:
-              Border.all(color: AppConstants.primaryColor, width: 3),
+              border: Border.all(color: AppConstants.primaryColor, width: 3),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
@@ -591,7 +593,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 backgroundColor: AppConstants.primaryColor,
                 foregroundColor: Colors.white,
                 padding:
-                const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
             ),
           ],

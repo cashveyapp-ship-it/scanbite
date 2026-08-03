@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../screens/subscription_screen.dart';
@@ -24,9 +24,9 @@ class AppDrawer extends StatelessWidget {
     final String? authEmail = authProvider.user?.email?.toLowerCase().trim();
     final bool isAdmin = _adminEmails.contains(authEmail);
 
-    // 🔴 DEBUG - remove after confirming admin access works
-    print('🔑 DRAWER AUTH EMAIL: $authEmail');
-    print('🔑 DRAWER IS ADMIN: $isAdmin');
+    // ðŸ”´ DEBUG - remove after confirming admin access works
+    print('ðŸ”‘ DRAWER AUTH EMAIL: $authEmail');
+    print('ðŸ”‘ DRAWER IS ADMIN: $isAdmin');
 
     return Drawer(
       child: Column(
@@ -36,11 +36,14 @@ class AppDrawer extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppConstants.primaryColor, AppConstants.secondaryColor],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x14000000),
+                      blurRadius: 18,
+                      offset: Offset(0, 6),
+                    ),
+                  ],
+              color: Colors.black,
             ),
             child: SafeArea(
               child: Column(
@@ -48,13 +51,13 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundColor: Colors.white,
+                    backgroundColor: const Color(0xFFE8F8ED),
                     child: Text(
                       userProfile?.displayName?.substring(0, 1).toUpperCase() ?? 'U',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: AppConstants.primaryColor,
+                        color: const Color(0xFF34C759),
                       ),
                     ),
                   ),
@@ -108,7 +111,7 @@ class AppDrawer extends StatelessWidget {
                   ),
                 const Divider(),
 
-                // 🔥 NEW: ANIMATED "SEE HOW IT WORKS"
+                // ðŸ”¥ NEW: ANIMATED "SEE HOW IT WORKS"
                 const AnimatedHowItWorksTile(),
 
                 const Divider(),
@@ -181,7 +184,7 @@ class AppDrawer extends StatelessWidget {
 
                 const Divider(),
 
-                // 🤖 NEW: Ask AI About Food
+                // ðŸ¤– NEW: Ask AI About Food
                 ListTile(
                   leading: const Icon(Icons.smart_toy),
                   title: const Text('Ask AI About Food'),
@@ -226,7 +229,7 @@ class AppDrawer extends StatelessWidget {
                         : 'https://play.google.com/store/apps/details?id=com.an2app.scanbite&pcampaignid=web_share';
 
                     await Share.share(
-                      'Check out ScanBite — an AI Food Nutrition Scanner:\n$appLink',
+                      'Check out ScanBite â€” an AI Food Nutrition Scanner:\n$appLink',
                       subject: 'ScanBite',
                     );
                   },
@@ -263,3 +266,12 @@ class AppDrawer extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+

@@ -10,7 +10,7 @@ class ResultScreen extends StatelessWidget {
 
   const ResultScreen({Key? key, required this.scan}) : super(key: key);
 
-  // 👇 ADD THIS HERE
+  // ðŸ‘‡ ADD THIS HERE
   void _showNutritionSourcesDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -19,11 +19,11 @@ class ResultScreen extends StatelessWidget {
         content: const SingleChildScrollView(
           child: Text(
             'Nutritional information is estimated using AI analysis and publicly available food data sources, including USDA FoodData Central and FDA nutrition guidance.\n\n'
-                'ScanBite provides general nutrition insights for informational and educational purposes only. Results may not be exact and should not be considered medical advice, diagnosis, or treatment guidance.\n\n'
-                'For medical, allergy, diet, or health-related concerns, please consult a qualified healthcare professional.\n\n'
-                'Sources:\n'
-                '• USDA FoodData Central: https://fdc.nal.usda.gov/\n'
-                '• FDA Nutrition Facts and Labeling Guidance: https://www.fda.gov/food',
+            'ScanBite provides general nutrition insights for informational and educational purposes only. Results may not be exact and should not be considered medical advice, diagnosis, or treatment guidance.\n\n'
+            'For medical, allergy, diet, or health-related concerns, please consult a qualified healthcare professional.\n\n'
+            'Sources:\n'
+            'â€¢ USDA FoodData Central: https://fdc.nal.usda.gov/\n'
+            'â€¢ FDA Nutrition Facts and Labeling Guidance: https://www.fda.gov/food',
             style: TextStyle(fontSize: 14),
           ),
         ),
@@ -37,19 +37,22 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final nutrition = scan.nutritionData;
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: const Text('Scan Results'),
         backgroundColor: AppConstants.primaryColor,
         foregroundColor: Colors.white,
       ),
 
-      // ✅ Sticky Scan Another button
+      // âœ… Sticky Scan Another button
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
@@ -94,7 +97,6 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildFoodImage(),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -127,16 +129,12 @@ class ResultScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 24),
-
                   _buildHealthScoreCard(nutrition.healthScore),
                   const SizedBox(height: 16),
-
                   _buildNutritionCard(nutrition),
                   const SizedBox(height: 16),
-
                   if (nutrition.aiInsights.isNotEmpty)
                     _buildAIInsightsCard(nutrition.aiInsights),
-
                   if (nutrition.healthBenefits.isNotEmpty)
                     _buildListCard(
                       'Nutrition Insights',
@@ -144,7 +142,6 @@ class ResultScreen extends StatelessWidget {
                       AppConstants.successColor,
                       Icons.check_circle,
                     ),
-
                   if (nutrition.healthRisks.isNotEmpty)
                     _buildListCard(
                       'Nutrition Considerations',
@@ -152,13 +149,10 @@ class ResultScreen extends StatelessWidget {
                       AppConstants.dangerColor,
                       Icons.warning,
                     ),
-
                   if (nutrition.allergens.isNotEmpty)
                     _buildAllergenCard(nutrition.allergens),
-
                   if (nutrition.ingredients.isNotEmpty)
                     _buildIngredientsCard(nutrition.ingredients),
-
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
@@ -179,9 +173,7 @@ class ResultScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-
                         const SizedBox(height: 6),
-
                         Text(
                           'Nutrition values are AI-generated estimates and may vary. Sources include USDA FoodData Central and FDA nutrition guidance.',
                           style: TextStyle(
@@ -189,9 +181,7 @@ class ResultScreen extends StatelessWidget {
                             color: Colors.grey.shade700,
                           ),
                         ),
-
                         const SizedBox(height: 8),
-
                         TextButton.icon(
                           onPressed: () => _showNutritionSourcesDialog(context),
                           icon: const Icon(
@@ -205,8 +195,6 @@ class ResultScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
-
                   const SizedBox(height: 80),
                 ],
               ),
@@ -245,23 +233,23 @@ class ResultScreen extends StatelessWidget {
         color: Colors.grey[300],
         child: isNetworkImage
             ? Image.network(
-          scan.imageUrl,
-          fit: BoxFit.cover,
-          loadingBuilder: (context, child, progress) {
-            if (progress == null) return child;
-            return const Center(child: CircularProgressIndicator());
-          },
-          errorBuilder: (context, error, stackTrace) {
-            return _buildErrorImage();
-          },
-        )
+                scan.imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, progress) {
+                  if (progress == null) return child;
+                  return const Center(child: CircularProgressIndicator());
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildErrorImage();
+                },
+              )
             : Image.file(
-          File(scan.imageUrl),
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return _buildErrorImage();
-          },
-        ),
+                File(scan.imageUrl),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildErrorImage();
+                },
+              ),
       ),
     );
   }
@@ -318,7 +306,8 @@ class ResultScreen extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: scoreColor, shape: BoxShape.circle),
+              decoration:
+                  BoxDecoration(color: scoreColor, shape: BoxShape.circle),
               child: Icon(scoreIcon, color: Colors.white, size: 32),
             ),
             const SizedBox(width: 16),
@@ -365,21 +354,31 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Nutrition Facts', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Nutrition Facts',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const Divider(height: 24),
-            _buildNutrientRow('Calories', '${nutrition.calories} kcal', AppConstants.accentColor),
+            _buildNutrientRow('Calories', '${nutrition.calories} kcal',
+                AppConstants.accentColor),
             const SizedBox(height: 12),
-            _buildNutrientRow('Protein', '${nutrition.protein.toStringAsFixed(1)}g', AppConstants.primaryColor),
+            _buildNutrientRow(
+                'Protein',
+                '${nutrition.protein.toStringAsFixed(1)}g',
+                AppConstants.primaryColor),
             const SizedBox(height: 12),
-            _buildNutrientRow('Carbs', '${nutrition.carbs.toStringAsFixed(1)}g', AppConstants.warningColor),
+            _buildNutrientRow('Carbs', '${nutrition.carbs.toStringAsFixed(1)}g',
+                AppConstants.warningColor),
             const SizedBox(height: 12),
-            _buildNutrientRow('Fats', '${nutrition.fats.toStringAsFixed(1)}g', AppConstants.dangerColor),
+            _buildNutrientRow('Fats', '${nutrition.fats.toStringAsFixed(1)}g',
+                AppConstants.dangerColor),
             const SizedBox(height: 12),
-            _buildNutrientRow('Fiber', '${nutrition.fiber.toStringAsFixed(1)}g', AppConstants.successColor),
+            _buildNutrientRow('Fiber', '${nutrition.fiber.toStringAsFixed(1)}g',
+                AppConstants.successColor),
             const SizedBox(height: 12),
-            _buildNutrientRow('Sugar', '${nutrition.sugar.toStringAsFixed(1)}g', Colors.pink),
+            _buildNutrientRow(
+                'Sugar', '${nutrition.sugar.toStringAsFixed(1)}g', Colors.pink),
             const SizedBox(height: 12),
-            _buildNutrientRow('Sodium', '${nutrition.sodium.toStringAsFixed(0)}mg', Colors.orange),
+            _buildNutrientRow('Sodium',
+                '${nutrition.sodium.toStringAsFixed(0)}mg', Colors.orange),
           ],
         ),
       ),
@@ -389,10 +388,19 @@ class ResultScreen extends StatelessWidget {
   Widget _buildNutrientRow(String label, String value, Color color) {
     return Row(
       children: [
-        Container(width: 4, height: 20, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2))),
+        Container(
+            width: 4,
+            height: 20,
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(2))),
         const SizedBox(width: 12),
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500))),
-        Text(value, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color)),
+        Expanded(
+            child: Text(label,
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.w500))),
+        Text(value,
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: color)),
       ],
     );
   }
@@ -410,7 +418,8 @@ class ResultScreen extends StatelessWidget {
             Row(children: [
               Icon(Icons.lightbulb, color: AppConstants.primaryColor),
               const SizedBox(width: 8),
-              const Text('AI Insights', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text('AI Insights',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ]),
             const SizedBox(height: 12),
             Text(insights, style: const TextStyle(fontSize: 14, height: 1.5)),
@@ -420,7 +429,8 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListCard(String title, List<String> items, Color color, IconData icon) {
+  Widget _buildListCard(
+      String title, List<String> items, Color color, IconData icon) {
     return Card(
       elevation: 2,
       color: color.withOpacity(0.1),
@@ -431,17 +441,23 @@ class ResultScreen extends StatelessWidget {
           Row(children: [
             Icon(icon, color: color),
             const SizedBox(width: 8),
-            Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(title,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ]),
           const SizedBox(height: 12),
           ...items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Icon(Icons.circle, size: 6, color: color),
-              const SizedBox(width: 8),
-              Expanded(child: Text(item, style: const TextStyle(fontSize: 14))),
-            ]),
-          )),
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.circle, size: 6, color: color),
+                      const SizedBox(width: 8),
+                      Expanded(
+                          child:
+                              Text(item, style: const TextStyle(fontSize: 14))),
+                    ]),
+              )),
         ]),
       ),
     );
@@ -458,7 +474,8 @@ class ResultScreen extends StatelessWidget {
           Row(children: [
             Icon(Icons.warning, color: AppConstants.dangerColor),
             const SizedBox(width: 8),
-            const Text('Allergen Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Allergen Information',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ]),
           const SizedBox(height: 12),
           Wrap(
@@ -487,7 +504,8 @@ class ResultScreen extends StatelessWidget {
           const Row(children: [
             Icon(Icons.list, color: AppConstants.primaryColor),
             SizedBox(width: 8),
-            Text('Ingredients', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text('Ingredients',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ]),
           const SizedBox(height: 12),
           Text(ingredients.join(', '), style: const TextStyle(fontSize: 14)),

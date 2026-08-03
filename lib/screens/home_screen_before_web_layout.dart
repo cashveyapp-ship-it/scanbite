@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,241 +30,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isDesktop = constraints.maxWidth >= 1000;
-
-        if (isDesktop) {
-          return Scaffold(
-            backgroundColor: AppConstants.backgroundColor,
-            body: Row(
-              children: [
-                Container(
-                  width: 250,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                      right: BorderSide(
-                        color: AppConstants.borderColor,
-                      ),
-                    ),
-                  ),
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 24, 18, 24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 14),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 22,
-                                  backgroundColor: Color(0xFFE8F8ED),
-                                  child: Icon(
-                                    Icons.document_scanner_rounded,
-                                    color: AppConstants.primaryColor,
-                                    size: 25,
-                                  ),
-                                ),
-                                SizedBox(width: 12),
-                                Text(
-                                  'ScanBite',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w900,
-                                    color: AppConstants.primaryTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 38),
-                          _WebNavItem(
-                            icon: Icons.home_rounded,
-                            label: 'Home',
-                            active: _currentIndex == 0,
-                            onTap: () => setState(() => _currentIndex = 0),
-                          ),
-                          const SizedBox(height: 10),
-                          _WebNavItem(
-                            icon: Icons.history_rounded,
-                            label: 'Scan History',
-                            active: _currentIndex == 1,
-                            onTap: () => setState(() => _currentIndex = 1),
-                          ),
-                          const SizedBox(height: 10),
-                          _WebNavItem(
-                            icon: Icons.person_rounded,
-                            label: 'Profile',
-                            active: _currentIndex == 2,
-                            onTap: () => setState(() => _currentIndex = 2),
-                          ),
-                          const Spacer(),
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF4FAF6),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: AppConstants.borderColor,
-                              ),
-                            ),
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.health_and_safety_rounded,
-                                  color: AppConstants.primaryColor,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Make informed food choices',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    color: AppConstants.primaryTextColor,
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  'Scan food and review nutrition information in seconds.',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    height: 1.4,
-                                    color: AppConstants.secondaryTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 1440,
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: _screens[_currentIndex],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return Scaffold(
+      backgroundColor: AppConstants.backgroundColor,
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(18, 0, 18, 14),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: const [
+            BoxShadow(
+              color: AppConstants.shadowColor,
+              blurRadius: 24,
+              offset: Offset(0, 10),
             ),
-          );
-        }
-
-        return Scaffold(
-          backgroundColor: AppConstants.backgroundColor,
-          body: _screens[_currentIndex],
-          bottomNavigationBar: Container(
-            margin: const EdgeInsets.fromLTRB(18, 0, 18, 14),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 10,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(28),
-              boxShadow: const [
-                BoxShadow(
-                  color: AppConstants.shadowColor,
-                  blurRadius: 24,
-                  offset: Offset(0, 10),
-                ),
-              ],
-            ),
-            child: SafeArea(
-              top: false,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _NavItem(
-                    icon: Icons.home_rounded,
-                    label: 'Home',
-                    active: _currentIndex == 0,
-                    onTap: () => setState(() => _currentIndex = 0),
-                  ),
-                  _NavItem(
-                    icon: Icons.history_rounded,
-                    label: 'History',
-                    active: _currentIndex == 1,
-                    onTap: () => setState(() => _currentIndex = 1),
-                  ),
-                  _NavItem(
-                    icon: Icons.person_rounded,
-                    label: 'Profile',
-                    active: _currentIndex == 2,
-                    onTap: () => setState(() => _currentIndex = 2),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _WebNavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  const _WebNavItem({
-    required this.icon,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-          decoration: BoxDecoration(
-            color: active ? const Color(0xFFE8F8ED) : Colors.transparent,
-            borderRadius: BorderRadius.circular(16),
-          ),
+          ],
+        ),
+        child: SafeArea(
+          top: false,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Icon(
-                icon,
-                size: 23,
-                color: active
-                    ? AppConstants.primaryColor
-                    : AppConstants.secondaryTextColor,
+              _NavItem(
+                icon: Icons.home_rounded,
+                label: 'Home',
+                active: _currentIndex == 0,
+                onTap: () => setState(() => _currentIndex = 0),
               ),
-              const SizedBox(width: 14),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: active ? FontWeight.w800 : FontWeight.w600,
-                  color: active
-                      ? AppConstants.primaryColor
-                      : AppConstants.primaryTextColor,
-                ),
+              _NavItem(
+                icon: Icons.history_rounded,
+                label: 'History',
+                active: _currentIndex == 1,
+                onTap: () => setState(() => _currentIndex = 1),
+              ),
+              _NavItem(
+                icon: Icons.person_rounded,
+                label: 'Profile',
+                active: _currentIndex == 2,
+                onTap: () => setState(() => _currentIndex = 2),
               ),
             ],
           ),
@@ -349,7 +153,9 @@ class HomeTabScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 14),
+
               Text(
                 'Hi $name, ready to scan your food?',
                 style: const TextStyle(
@@ -359,7 +165,9 @@ class HomeTabScreen extends StatelessWidget {
                   color: AppConstants.primaryTextColor,
                 ),
               ),
+
               const SizedBox(height: 8),
+
               Text(
                 isPremium
                     ? 'Premium active • unlimited scans'
@@ -370,23 +178,28 @@ class HomeTabScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+
               const SizedBox(height: 22),
+
               _HeroScanCard(
                 onTap: () => _startScan(context, authProvider),
               ),
+
               const SizedBox(height: 18),
+
               if (!isPremium)
                 _PremiumMiniCard(
                   freeScansRemaining: freeScansRemaining,
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (_) => const SubscriptionScreen()),
+                      MaterialPageRoute(builder: (_) => const SubscriptionScreen()),
                     );
                   },
                 ),
+
               const SizedBox(height: 22),
+
               const Text(
                 'Smart tools',
                 style: TextStyle(
@@ -395,7 +208,9 @@ class HomeTabScreen extends StatelessWidget {
                   color: AppConstants.primaryTextColor,
                 ),
               ),
+
               const SizedBox(height: 12),
+
               Row(
                 children: [
                   Expanded(
@@ -415,7 +230,9 @@ class HomeTabScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
               const SizedBox(height: 12),
+
               Row(
                 children: [
                   Expanded(
@@ -435,21 +252,27 @@ class HomeTabScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
               const SizedBox(height: 24),
+
               _InfoCard(
                 icon: Icons.verified_rounded,
                 title: 'Nutrition estimates',
                 text:
                     'ScanBite uses AI analysis and public nutrition databases to estimate calories, macros, and nutrition details.',
               ),
+
               const SizedBox(height: 12),
+
               _InfoCard(
                 icon: Icons.health_and_safety_rounded,
                 title: 'Informational only',
                 text:
                     'ScanBite is not medical advice. Use it as a helpful nutrition guide.',
               ),
+
               const SizedBox(height: 14),
+
               const Center(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -937,3 +760,4 @@ class AverageRatingSummary extends StatelessWidget {
     );
   }
 }
+

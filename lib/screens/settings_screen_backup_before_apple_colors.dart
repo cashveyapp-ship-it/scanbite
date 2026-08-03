@@ -1,8 +1,8 @@
-﻿// settings_screen.dart (FULL UPDATED)
-// âœ… Adds:
+// settings_screen.dart (FULL UPDATED)
+// ✅ Adds:
 // 1) "Rate this app" tile (all users) -> RateAppScreen()
 // 2) "Ratings Inbox" tile (admin only: an2mouth@yahoo.com) -> AdminRatingsScreen()
-// âœ… Does NOT change your other logic
+// ✅ Does NOT change your other logic
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ import '../gen_l10n/app_localizations.dart';
 import 'family_management_screen.dart';
 import 'package:flutter/services.dart';
 
-// âœ… NEW
+// ✅ NEW
 import 'rate_app_screen.dart';
 import 'admin_ratings_screen.dart';
 
@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: AppConstants.primaryColor,
               ),
               child: Text(l10n.subscribeNow),
             ),
@@ -134,30 +134,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final userProfile = authProvider.userProfile;
     final l10n = AppLocalizations.of(context)!;
 
-    // âœ… admin flag (single source of truth)
+    // ✅ admin flag (single source of truth)
     final bool isAdmin =
         _isAdminEmail(authProvider.user?.email) || _isAdminEmail(userProfile?.email);
 
     return Scaffold(
-      backgroundColor: AppConstants.backgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Colors.black,
-            size: 20,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          l10n.settings,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        title: Text(l10n.settings),
+        backgroundColor: AppConstants.primaryColor,
+        foregroundColor: Colors.white,
       ),
       body: ListView(
         children: [
@@ -167,19 +152,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _buildSectionHeader(l10n.language),
           _buildLanguageTile(context, localeProvider),
 
-          const Divider(color: Color(0xFFE5E5EA), height: 1),
+          const Divider(),
 
           // Notifications
           _buildSectionHeader(l10n.notifications),
           SwitchListTile(
             secondary: const Icon(Icons.notifications),
-            title: Text(
-              l10n.enableNotifications,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-              ),
-            ),
+            title: Text(l10n.enableNotifications),
             subtitle: Text(
               NotificationService().isEnabled
                   ? l10n.notificationsEnabled
@@ -190,10 +169,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (value) {
                 await NotificationService().enableNotifications();
 
-                // âœ… If actually enabled (permission granted), show a one-time pop-up reminder
+                // ✅ If actually enabled (permission granted), show a one-time pop-up reminder
                 if (NotificationService().isEnabled) {
                   await NotificationService().showScanReminder(
-                    'Notifications enabled! Reminder: scan your food before you eat',
+                    '🔔 Notifications enabled! Reminder: scan your food before you eat 🍽️',
                   );
                 }
               } else {
@@ -216,22 +195,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             },
           ),
-          // TEST NOTIFICATION - âœ… LOCALIZED
+          // TEST NOTIFICATION - ✅ LOCALIZED
           ListTile(
             leading: const Icon(Icons.notifications_active,
                 color: AppConstants.primaryColor),
-            title: Text(
-              l10n.testNotification,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
-              ),
-            ),
+            title: Text(l10n.testNotification),
             subtitle: Text(l10n.testNotificationSubtitle),
             trailing: ElevatedButton(
               onPressed: () async {
                 await NotificationService().showDailyTipNotification(
-                  'Test notification from ScanBite! ðŸŽ‰ Your notifications are working!',
+                  'Test notification from ScanBite! 🎉 Your notifications are working!',
                 );
 
                 if (mounted) {
@@ -245,8 +218,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
+                backgroundColor: AppConstants.primaryColor,
+                foregroundColor: Colors.white,
                 padding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
@@ -254,9 +227,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          const Divider(color: Color(0xFFE5E5EA), height: 1),
+          const Divider(),
 
-          // âœ… ADMIN SECTION (Admin Panel + Ratings Inbox)
+          // ✅ ADMIN SECTION (Admin Panel + Ratings Inbox)
           if (isAdmin) ...[
             _buildSectionHeader(l10n.admin),
 
@@ -288,7 +261,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
 
-            // âœ… Ratings Inbox (admin only)
+            // ✅ Ratings Inbox (admin only)
             _buildTile(
               icon: Icons.rate_review,
               title: l10n.ratingsInboxTitle,
@@ -304,7 +277,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const Divider(thickness: 2, color: Colors.red),
           ],
 
-          // Legal - âœ… LOCALIZED
+          // Legal - ✅ LOCALIZED
           _buildSectionHeader(l10n.legal),
           _buildTile(
             icon: Icons.privacy_tip,
@@ -325,9 +298,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          const Divider(color: Color(0xFFE5E5EA), height: 1),
+          const Divider(),
 
-          // SUBSCRIPTION SECTION - âœ… LOCALIZED
+          // SUBSCRIPTION SECTION - ✅ LOCALIZED
           _buildSectionHeader(l10n.subscriptionSectionTitle),
           _buildTile(
             icon: Icons.star,
@@ -343,7 +316,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
 
-          // FAMILY PLAN SECTION - âœ… FULLY LOCALIZED
+          // FAMILY PLAN SECTION - ✅ FULLY LOCALIZED
           if (userProfile != null) ...[
             if (userProfile.isFamilyPlanOwner == true &&
                 (userProfile.familyCode ?? '').isNotEmpty)
@@ -468,7 +441,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             label: Text(l10n.manageFamilyMembersButton),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple.shade700,
-                              foregroundColor: Colors.black,
+                              foregroundColor: Colors.white,
                             ),
                           ),
                         ),
@@ -526,7 +499,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple.shade700,
-                              foregroundColor: Colors.black,
+                              foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                             ),
                           ),
@@ -553,16 +526,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
           ],
 
-          const Divider(color: Color(0xFFE5E5EA), height: 1),
+          const Divider(),
 
-          // About - âœ… LOCALIZED
+          // About - ✅ LOCALIZED
           _buildSectionHeader(l10n.about),
 
-          // âœ… Rate this app (all users)
+          // ✅ Rate this app (all users)
           _buildTile(
             icon: Icons.rate_review,
-            title: l10n.rateThisApp,           // âœ… was hardcoded 'Rate this app'
-            subtitle: l10n.rateThisAppSubtitle, // âœ… was hardcoded 'Leave a rating & comment'
+            title: l10n.rateThisApp,           // ✅ was hardcoded 'Rate this app'
+            subtitle: l10n.rateThisAppSubtitle, // ✅ was hardcoded 'Leave a rating & comment'
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const RateAppScreen()),
@@ -583,7 +556,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: const [
                   Text('AI-powered food nutrition scanner'),
                   SizedBox(height: 8),
-                  Text('Â© 2026 ScanBite. All rights reserved.'),
+                  Text('© 2024 ScanBite. All rights reserved.'),
                 ],
               );
             },
@@ -593,7 +566,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
-
   }
 
   Widget _buildSectionHeader(String title) {
@@ -604,7 +576,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF2E7D32),
+          color: AppConstants.primaryColor,
         ),
       ),
     );
@@ -618,16 +590,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: const Color(0xFFEAF7ED),
-        child: Icon(icon, color: const Color(0xFF2E7D32)),
+        backgroundColor: AppConstants.primaryColor.withOpacity(0.1),
+        child: Icon(icon, color: AppConstants.primaryColor),
       ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
+      title: Text(title),
       subtitle: Text(subtitle),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: onTap,
@@ -636,25 +602,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildLanguageTile(BuildContext context, LocaleProvider localeProvider) {
     final languages = {
-      'en': 'English',
-      'es': 'Spanish',
-      'fr': 'French',
-      'de': 'German',
+      'en': '🇺🇸 English',
+      'es': '🇪🇸 Español',
+      'fr': '🇫🇷 Français',
+      'de': '🇩🇪 Deutsch',
     };
 
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor: const Color(0xFFEAF7ED),
-        child: const Icon(Icons.language, color: Color(0xFF2E7D32)),
+        backgroundColor: AppConstants.primaryColor.withOpacity(0.1),
+        child: const Icon(Icons.language, color: AppConstants.primaryColor),
       ),
-      title: Text(
-        l10n.language,
-        style: const TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-        ),
-      ),
-      subtitle: Text(languages[localeProvider.locale.languageCode] ?? ' English'),
+      title: Text(l10n.language),
+      subtitle: Text(languages[localeProvider.locale.languageCode] ?? '🇺🇸 English'),
       trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         showDialog(
@@ -691,10 +651,3 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-
-
-
-
-
-
-

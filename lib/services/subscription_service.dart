@@ -1,4 +1,4 @@
-// subscription_service.dart
+﻿// subscription_service.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -46,9 +46,6 @@ class SubscriptionService {
     _onPurchaseSuccess = onSuccess;
     _onPurchaseError = onError;
 
-    if (InAppPurchaseAndroidPlatformAddition.enablePendingPurchases != null) {
-      InAppPurchaseAndroidPlatformAddition.enablePendingPurchases!();
-    }
 
     final Stream<List<PurchaseDetails>> purchaseUpdated =
         _inAppPurchase.purchaseStream;
@@ -62,7 +59,7 @@ class SubscriptionService {
       },
     );
 
-    // ✅ Check for expired subscriptions every time the service initializes
+    // âœ… Check for expired subscriptions every time the service initializes
     // (i.e. on every app launch and after sign-in)
     await checkAndHandleExpiry(userId);
   }
@@ -96,7 +93,7 @@ class SubscriptionService {
     }
   }
 
-  // ✅ UPDATED: use buyConsumable for one-time products
+  // âœ… UPDATED: use buyConsumable for one-time products
   Future<bool> purchaseSubscription(ProductDetails product) async {
     try {
       print('Initiating purchase for: ${product.id}');
@@ -154,59 +151,59 @@ class SubscriptionService {
 
   Future<void> _verifyAndDeliverProduct(PurchaseDetails purchaseDetails) async {
     try {
-      print('✅ [PURCHASE] Verifying: ${purchaseDetails.productID}');
+      print('âœ… [PURCHASE] Verifying: ${purchaseDetails.productID}');
 
       if (_currentUserId == null) {
-        print('❌ [PURCHASE] No user ID set');
+        print('âŒ [PURCHASE] No user ID set');
         _onPurchaseError?.call('User not logged in');
         return;
       }
 
-      // ─── Single Scan ───────────────────────────────────────────────────────
+      // â”€â”€â”€ Single Scan â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == singleScanProductId) {
-        print('💳 [PURCHASE] Single scan purchase');
+        print('ðŸ’³ [PURCHASE] Single scan purchase');
         await _firestore.collection('users').doc(_currentUserId!).set({
           'scanCredits': FieldValue.increment(1),
         }, SetOptions(merge: true));
-        print('✅ [PURCHASE] 1 scan credit added');
+        print('âœ… [PURCHASE] 1 scan credit added');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      // ─── Extra Family Member Slot ──────────────────────────────────────────
+      // â”€â”€â”€ Extra Family Member Slot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == familyExtraMemberId) {
-        print('💳 [PURCHASE] Extra family member slot');
+        print('ðŸ’³ [PURCHASE] Extra family member slot');
         await _firestore.collection('users').doc(_currentUserId!).set({
           'extraMemberSlots': FieldValue.increment(1),
         }, SetOptions(merge: true));
-        print('✅ [PURCHASE] Extra slot added');
+        print('âœ… [PURCHASE] Extra slot added');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      // ─── Monthly Individual Subscription ──────────────────────────────────
+      // â”€â”€â”€ Monthly Individual Subscription â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == monthlySubscriptionId) {
-        print('💳 [PURCHASE] Monthly subscription');
+        print('ðŸ’³ [PURCHASE] Monthly subscription');
         final expiryDate = DateTime.now().add(const Duration(days: 30));
         await _firebaseService.updateSubscription(_currentUserId!, true, expiryDate);
-        print('✅ [PURCHASE] Monthly subscription activated');
+        print('âœ… [PURCHASE] Monthly subscription activated');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      // ─── Yearly Individual Subscription ───────────────────────────────────
+      // â”€â”€â”€ Yearly Individual Subscription â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == yearlySubscriptionId) {
-        print('💳 [PURCHASE] Yearly subscription');
+        print('ðŸ’³ [PURCHASE] Yearly subscription');
         final expiryDate = DateTime.now().add(const Duration(days: 365));
         await _firebaseService.updateSubscription(_currentUserId!, true, expiryDate);
-        print('✅ [PURCHASE] Yearly subscription activated');
+        print('âœ… [PURCHASE] Yearly subscription activated');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      // ─── Family Monthly Subscription ──────────────────────────────────────
+      // â”€â”€â”€ Family Monthly Subscription â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == familyMonthlySubscriptionId) {
-        print('💳 [PURCHASE] Family monthly subscription');
+        print('ðŸ’³ [PURCHASE] Family monthly subscription');
         final expiryDate = DateTime.now().add(const Duration(days: 30));
 
         final userDoc = await _firestore.collection('users').doc(_currentUserId!).get();
@@ -214,26 +211,26 @@ class SubscriptionService {
         final isAlreadyOwner = userData?['isFamilyPlanOwner'] == true;
 
         if (!isAlreadyOwner) {
-          // First time — create the family plan
+          // First time â€” create the family plan
           final familyCode = await _familyService.createFamilyPlan(_currentUserId!);
-          print('✅ [PURCHASE] Family plan created with code: $familyCode');
+          print('âœ… [PURCHASE] Family plan created with code: $familyCode');
         }
 
         // Grant owner premium
         await _firebaseService.updateSubscription(_currentUserId!, true, expiryDate);
 
-        // ✅ FIX: restore premium to all existing members (handles renewals)
-        // If first time there are no members yet — this is a safe no-op
+        // âœ… FIX: restore premium to all existing members (handles renewals)
+        // If first time there are no members yet â€” this is a safe no-op
         await _familyService.restoreFamilyPlan(_currentUserId!, expiryDate);
 
-        print('✅ [PURCHASE] Family monthly subscription activated');
+        print('âœ… [PURCHASE] Family monthly subscription activated');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      // ─── Family Yearly Subscription ───────────────────────────────────────
+      // â”€â”€â”€ Family Yearly Subscription â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       if (purchaseDetails.productID == familyYearlySubscriptionId) {
-        print('💳 [PURCHASE] Family yearly subscription');
+        print('ðŸ’³ [PURCHASE] Family yearly subscription');
         final expiryDate = DateTime.now().add(const Duration(days: 365));
 
         final userDoc = await _firestore.collection('users').doc(_currentUserId!).get();
@@ -241,31 +238,31 @@ class SubscriptionService {
         final isAlreadyOwner = userData?['isFamilyPlanOwner'] == true;
 
         if (!isAlreadyOwner) {
-          // First time — create the family plan
+          // First time â€” create the family plan
           final familyCode = await _familyService.createFamilyPlan(_currentUserId!);
-          print('✅ [PURCHASE] Family plan created with code: $familyCode');
+          print('âœ… [PURCHASE] Family plan created with code: $familyCode');
         }
 
         // Grant owner premium
         await _firebaseService.updateSubscription(_currentUserId!, true, expiryDate);
 
-        // ✅ FIX: restore premium to all existing members (handles renewals)
+        // âœ… FIX: restore premium to all existing members (handles renewals)
         await _familyService.restoreFamilyPlan(_currentUserId!, expiryDate);
 
-        print('✅ [PURCHASE] Family yearly subscription activated');
+        print('âœ… [PURCHASE] Family yearly subscription activated');
         _onPurchaseSuccess?.call();
         return;
       }
 
-      print('⚠️ [PURCHASE] Unknown product: ${purchaseDetails.productID}');
+      print('âš ï¸ [PURCHASE] Unknown product: ${purchaseDetails.productID}');
       _onPurchaseError?.call('Unknown product');
     } catch (e) {
-      print('❌ [PURCHASE] Error: $e');
+      print('âŒ [PURCHASE] Error: $e');
       _onPurchaseError?.call('Failed to activate: $e');
     }
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // EXPIRY CHECK
   //
   // Google Play does NOT push a "subscription expired" event through the
@@ -279,7 +276,7 @@ class SubscriptionService {
   //
   // Limitation: a user with no network access keeps premium until they come
   // back online. For a food scanner app this is an acceptable trade-off.
-  // ─────────────────────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Call this on every app launch and app resume.
   /// Detects lapsed subscriptions and cascades revoke to family members.
@@ -300,9 +297,9 @@ class SubscriptionService {
       final expiryDate = expiryTimestamp.toDate();
       final bool hasExpired = expiryDate.isBefore(DateTime.now());
 
-      if (!hasExpired) return; // Still active — nothing to do
+      if (!hasExpired) return; // Still active â€” nothing to do
 
-      print('⚠️ [EXPIRY] Subscription expired for $userId — revoking...');
+      print('âš ï¸ [EXPIRY] Subscription expired for $userId â€” revoking...');
 
       // Revoke the owner
       await _firebaseService.updateSubscription(
@@ -311,13 +308,13 @@ class SubscriptionService {
         DateTime.now().subtract(const Duration(days: 1)),
       );
 
-      // ✅ Cascade revoke to all family members if this user is an owner
+      // âœ… Cascade revoke to all family members if this user is an owner
       await _familyService.revokeFamilyPlan(userId);
 
-      print('✅ [EXPIRY] Revoke complete for $userId');
+      print('âœ… [EXPIRY] Revoke complete for $userId');
     } catch (e) {
       // Never crash the app over an expiry check
-      print('⚠️ [EXPIRY] checkAndHandleExpiry failed silently: $e');
+      print('âš ï¸ [EXPIRY] checkAndHandleExpiry failed silently: $e');
     }
   }
 

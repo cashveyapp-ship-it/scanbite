@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class AppConstants {
   // App Info
@@ -6,13 +6,28 @@ class AppConstants {
   static const String appVersion = '1.0.0';
   static const String scanImagesPath = 'scan_images';
 
-  // Colors
-  static const Color primaryColor = Color(0xFF2E7D32);
-  static const Color secondaryColor = Color(0xFF66BB6A);
-  static const Color accentColor = Color(0xFFFF6F00);
-  static const Color successColor = Color(0xFF4CAF50);
-  static const Color dangerColor = Color(0xFFF44336);
-  static const Color warningColor = Color(0xFFFF9800);
+  // Colors - Apple Style Modern UI
+  static const Color primaryColor = Color(0xFF34C759);
+  static const Color secondaryColor = Color(0xFF30D158);
+
+  static const Color accentColor = Color(0xFF32D74B);
+
+  static const Color successColor = Color(0xFF34C759);
+  static const Color dangerColor = Color(0xFFFF453A);
+  static const Color warningColor = Color(0xFFFF9F0A);
+
+  // Backgrounds
+  static const Color backgroundColor = Color(0xFFF6F7F3);
+  static const Color cardColor = Colors.white;
+  static const Color surfaceColor = Color(0xFFFFFFFF);
+
+  // Text
+  static const Color primaryTextColor = Color(0xFF1C1C1E);
+  static const Color secondaryTextColor = Color(0xFF8E8E93);
+
+  // Borders/Shadows
+  static const Color borderColor = Color(0xFFE5E5EA);
+  static const Color shadowColor = Color(0x14000000);
 
   // Firebase Collections
   static const String usersCollection = 'users';
@@ -41,3 +56,4 @@ class AppConstants {
   static const int maxHistoryItems = 100;
   static const int maxImageSizeMB = 5;
 }
+

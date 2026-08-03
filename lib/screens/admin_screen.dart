@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -32,11 +33,12 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
 
-    // FIX #1 — normalize email before comparing (toLowerCase + trim)
+    // FIX #1 Ã¢â‚¬â€ normalize email before comparing (toLowerCase + trim)
     // Previously: adminEmails.contains(authProvider.userProfile?.email)
     // This failed for emails stored with capitals or spaces in Firestore
     const adminEmails = ['an2mouth@yahoo.com', 'alerttmenow@gmail.com'];
-    final currentEmail = (authProvider.userProfile?.email ?? '').toLowerCase().trim();
+    final currentEmail =
+        (authProvider.userProfile?.email ?? '').toLowerCase().trim();
 
     if (!adminEmails.contains(currentEmail)) {
       return Scaffold(
@@ -56,13 +58,23 @@ class _AdminScreenState extends State<AdminScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.of(context).maybePop(),
+          child: const Icon(
+            CupertinoIcons.back,
+            color: Colors.white,
+            size: 24,
+          ),
+        ),
         title: const Text('Admin Panel'),
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
       ),
 
-      // FIX #2 — show loading overlay when an admin action is running
-      // Previously: _isLoading was toggled but never shown — admin could double-tap buttons
+      // FIX #2 Ã¢â‚¬â€ show loading overlay when an admin action is running
+      // Previously: _isLoading was toggled but never shown Ã¢â‚¬â€ admin could double-tap buttons
       body: Stack(
         children: [
           Column(
@@ -78,14 +90,14 @@ class _AdminScreenState extends State<AdminScreen> {
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _searchQuery.isNotEmpty
                         ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        setState(() {
-                          _searchController.clear();
-                          _searchQuery = '';
-                        });
-                      },
-                    )
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                                _searchQuery = '';
+                              });
+                            },
+                          )
                         : null,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -127,9 +139,11 @@ class _AdminScreenState extends State<AdminScreen> {
                     final filteredUsers = _searchQuery.isEmpty
                         ? allUsers
                         : allUsers.where((user) {
-                      return user.displayName.toLowerCase().contains(_searchQuery) ||
-                          user.email.toLowerCase().contains(_searchQuery);
-                    }).toList();
+                            return user.displayName
+                                    .toLowerCase()
+                                    .contains(_searchQuery) ||
+                                user.email.toLowerCase().contains(_searchQuery);
+                          }).toList();
 
                     filteredUsers.sort((a, b) {
                       if (a.isSubscriptionActive != b.isSubscriptionActive) {
@@ -140,9 +154,9 @@ class _AdminScreenState extends State<AdminScreen> {
 
                     return Column(
                       children: [
-                        // FIX #3 — pass allUsers directly to stats instead of opening a second stream
+                        // FIX #3 Ã¢â‚¬â€ pass allUsers directly to stats instead of opening a second stream
                         // Previously: _buildStatsCards() opened its own StreamBuilder on the same
-                        // 'users' collection — two live Firestore listeners for identical data
+                        // 'users' collection Ã¢â‚¬â€ two live Firestore listeners for identical data
                         _buildStatsCards(allUsers),
 
                         Expanded(
@@ -162,7 +176,7 @@ class _AdminScreenState extends State<AdminScreen> {
             ],
           ),
 
-          // FIX #2 continued — loading overlay blocks all taps while action runs
+          // FIX #2 continued Ã¢â‚¬â€ loading overlay blocks all taps while action runs
           if (_isLoading)
             Container(
               color: Colors.black.withOpacity(0.4),
@@ -187,7 +201,7 @@ class _AdminScreenState extends State<AdminScreen> {
     );
   }
 
-  // FIX #3 — accepts pre-loaded users list, no second Firestore stream needed
+  // FIX #3 Ã¢â‚¬â€ accepts pre-loaded users list, no second Firestore stream needed
   Widget _buildStatsCards(List<UserProfile> users) {
     final totalUsers = users.length;
     final premiumUsers = users.where((u) => u.isSubscriptionActive).length;
@@ -228,7 +242,8 @@ class _AdminScreenState extends State<AdminScreen> {
     );
   }
 
-  Widget _buildStatCard(String label, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+      String label, String value, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -261,7 +276,7 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   Widget _buildUserCard(UserProfile user) {
-    // FIX #4 — use isSubscriptionActive only (checks isPremium AND expiry > now)
+    // FIX #4 Ã¢â‚¬â€ use isSubscriptionActive only (checks isPremium AND expiry > now)
     // Previously: user.isSubscriptionActive || user.isPremium
     // That showed PREMIUM badge for users with isPremium=true but expired subscriptions
     final isPremium = user.isSubscriptionActive;
@@ -282,7 +297,8 @@ class _AdminScreenState extends State<AdminScreen> {
           backgroundColor: isPremium ? Colors.amber : AppConstants.primaryColor,
           child: Text(
             user.displayName.substring(0, 1).toUpperCase(),
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         title: Row(
@@ -322,11 +338,13 @@ class _AdminScreenState extends State<AdminScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
-            Text(user.email, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+            Text(user.email,
+                style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.calendar_today, size: 12, color: Colors.grey.shade600),
+                Icon(Icons.calendar_today,
+                    size: 12, color: Colors.grey.shade600),
                 const SizedBox(width: 4),
                 Text(
                   'Joined: ${_formatDate(user.createdAt)}',
@@ -348,8 +366,10 @@ class _AdminScreenState extends State<AdminScreen> {
                 _buildDetailRow('User ID', user.uid),
                 _buildDetailRow('Email', user.email),
                 _buildDetailRow('Display Name', user.displayName),
-                _buildDetailRow('Free Scans Left', '${user.freeScansRemaining}'),
-                _buildDetailRow('Subscription Status', isPremium ? 'Premium ✓' : 'Free'),
+                _buildDetailRow(
+                    'Free Scans Left', '${user.freeScansRemaining}'),
+                _buildDetailRow('Subscription Status',
+                    isPremium ? 'Premium Ã¢Å“â€œ' : 'Free'),
 
                 if (expiryDate != null)
                   _buildDetailRow(
@@ -365,13 +385,14 @@ class _AdminScreenState extends State<AdminScreen> {
 
                 const SizedBox(height: 16),
 
-                // FIX #2 continued — buttons disabled while loading
+                // FIX #2 continued Ã¢â‚¬â€ buttons disabled while loading
                 Row(
                   children: [
                     if (isPremium)
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: _isLoading ? null : () => _revokeAccess(user),
+                          onPressed:
+                              _isLoading ? null : () => _revokeAccess(user),
                           icon: const Icon(Icons.block),
                           label: const Text('Revoke Premium'),
                           style: ElevatedButton.styleFrom(
@@ -384,7 +405,8 @@ class _AdminScreenState extends State<AdminScreen> {
                     else
                       Expanded(
                         child: ElevatedButton.icon(
-                          onPressed: _isLoading ? null : () => _grantAccess(user),
+                          onPressed:
+                              _isLoading ? null : () => _grantAccess(user),
                           icon: const Icon(Icons.star),
                           label: const Text('Grant Premium'),
                           style: ElevatedButton.styleFrom(
@@ -456,7 +478,8 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.amber.shade700),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber.shade700),
             child: const Text('Grant Access'),
           ),
         ],
@@ -472,7 +495,7 @@ class _AdminScreenState extends State<AdminScreen> {
         // Grant premium to the owner
         await _firebaseService.updateSubscription(user.uid, true, expiryDate);
 
-        // ✅ If this user is a family plan owner, restore premium to all their members too
+        // Ã¢Å“â€¦ If this user is a family plan owner, restore premium to all their members too
         await _familyService.restoreFamilyPlan(user.uid, expiryDate);
 
         if (!mounted) return;
@@ -520,14 +543,14 @@ class _AdminScreenState extends State<AdminScreen> {
       setState(() => _isLoading = true);
 
       try {
-        // Revoke premium from the owner (set to yesterday — unambiguously expired)
+        // Revoke premium from the owner (set to yesterday Ã¢â‚¬â€ unambiguously expired)
         await _firebaseService.updateSubscription(
           user.uid,
           false,
           DateTime.now().subtract(const Duration(days: 1)),
         );
 
-        // ✅ If this user is a family plan owner, revoke premium from all their members too
+        // Ã¢Å“â€¦ If this user is a family plan owner, revoke premium from all their members too
         await _familyService.revokeFamilyPlan(user.uid);
 
         if (!mounted) return;
@@ -556,7 +579,8 @@ class _AdminScreenState extends State<AdminScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Reset Free Scans'),
-        content: Text('Reset free scans to ${AppConstants.freeScans} for ${user.displayName}?'),
+        content: Text(
+            'Reset free scans to ${AppConstants.freeScans} for ${user.displayName}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -564,7 +588,8 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(backgroundColor: AppConstants.primaryColor),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppConstants.primaryColor),
             child: const Text('Reset'),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../gen_l10n/app_localizations.dart';
 import '../utils/constants.dart';
 
@@ -11,6 +12,15 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.of(context).maybePop(),
+          child: const Icon(
+            CupertinoIcons.back,
+            size: 24,
+            color: Colors.white,
+          ),
+        ),
         title: Text(l10n.privacyPolicy),
         backgroundColor: AppConstants.primaryColor,
         foregroundColor: Colors.white,
@@ -23,8 +33,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
             Text(
               l10n.privacyTitle,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -35,19 +45,20 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
             _buildSection(l10n.privacyIntroTitle, l10n.privacyIntroBody),
             _buildSection(l10n.privacyCollectTitle, l10n.privacyCollectBody),
             _buildSection(l10n.privacyUseTitle, l10n.privacyUseBody),
             _buildSection(l10n.privacySecurityTitle, l10n.privacySecurityBody),
-            _buildSection(l10n.privacyThirdPartyTitle, l10n.privacyThirdPartyBody),
+            _buildSection(
+                l10n.privacyThirdPartyTitle, l10n.privacyThirdPartyBody),
             _buildSection(l10n.privacyRightsTitle, l10n.privacyRightsBody),
             _buildSection(l10n.privacyChildrenTitle, l10n.privacyChildrenBody),
-            _buildSection(l10n.privacyRetentionTitle, l10n.privacyRetentionBody),
-            _buildSection(l10n.privacyTransfersTitle, l10n.privacyTransfersBody),
+            _buildSection(
+                l10n.privacyRetentionTitle, l10n.privacyRetentionBody),
+            _buildSection(
+                l10n.privacyTransfersTitle, l10n.privacyTransfersBody),
             _buildSection(l10n.privacyChangesTitle, l10n.privacyChangesBody),
             _buildSection(l10n.privacyContactTitle, l10n.privacyContactBody),
-
             const SizedBox(height: 32),
             Center(
               child: Text(

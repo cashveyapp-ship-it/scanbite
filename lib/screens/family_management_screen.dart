@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -23,7 +23,7 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
   List<Map<String, dynamic>> _familyMembers = [];
   bool _isLoading = false;
 
-  // ✅ NEW: local fallback if the profile didn't hydrate familyCode after login
+  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ NEW: local fallback if the profile didn't hydrate familyCode after login
   String? _retrievedFamilyCode;
 
   AppLocalizations get l10n => AppLocalizations.of(context)!;
@@ -52,7 +52,9 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final ownerId = userProfile.isFamilyPlanOwner ? userProfile.uid : userProfile.familyPlanOwnerId;
+      final ownerId = userProfile.isFamilyPlanOwner
+          ? userProfile.uid
+          : userProfile.familyPlanOwnerId;
 
       if (ownerId != null) {
         final capacity = await _familyService.getFamilyCapacity(ownerId);
@@ -79,12 +81,15 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
     }
   }
 
-  // ✅ NEW: retrieve owner family code directly from Firestore (safe + minimal)
+  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ NEW: retrieve owner family code directly from Firestore (safe + minimal)
   Future<void> _handleRetrieveFamilyCode(String ownerId) async {
     setState(() => _isLoading = true);
 
     try {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(ownerId).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(ownerId)
+          .get();
       if (!doc.exists) {
         throw Exception('Owner profile not found.');
       }
@@ -93,7 +98,8 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
       final code = (data['familyCode'] ?? '').toString().trim();
 
       if (code.isEmpty) {
-        throw Exception('No family code found. If you just subscribed, create the family plan first.');
+        throw Exception(
+            'No family code found. If you just subscribed, create the family plan first.');
       }
 
       setState(() {
@@ -132,22 +138,44 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
 
     if (userProfile == null) {
       return Scaffold(
-        appBar: AppBar(title: Text(l10n.familyPlanTileTitle)),
-        body: const Center(child: CircularProgressIndicator()),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Text(l10n.familyPlanTileTitle),
+          backgroundColor: Colors.purple.shade700,
+          foregroundColor: Colors.white,
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     }
 
     final isOwner = userProfile.isFamilyPlanOwner;
     final isMember = userProfile.familyPlanOwnerId != null;
 
-    // ✅ prefer Firestore-hydrated code, else local retrieved fallback
+    // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ prefer Firestore-hydrated code, else local retrieved fallback
     final familyCode = userProfile.familyCode ?? _retrievedFamilyCode;
 
-    // ✅ Determine ownerId for retrieval & member list
+    // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ Determine ownerId for retrieval & member list
     final ownerId = isOwner ? userProfile.uid : userProfile.familyPlanOwnerId;
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(l10n.familyPlanTileTitle),
         backgroundColor: Colors.purple.shade700,
         foregroundColor: Colors.white,
@@ -155,39 +183,42 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ✅ If owner and we have code -> show normal code card
-            if (isOwner && familyCode != null) ...[
-              _buildFamilyCodeCard(familyCode),
-              const SizedBox(height: 24),
-            ],
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ If owner and we have code -> show normal code card
+                  if (isOwner && familyCode != null) ...[
+                    _buildFamilyCodeCard(familyCode),
+                    const SizedBox(height: 24),
+                  ],
 
-            // ✅ If owner but code missing -> show retrieve button card
-            if (isOwner && (familyCode == null || familyCode.trim().isEmpty) && ownerId != null) ...[
-              _buildRetrieveCodeCard(ownerId),
-              const SizedBox(height: 24),
-            ],
+                  // ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¦ If owner but code missing -> show retrieve button card
+                  if (isOwner &&
+                      (familyCode == null || familyCode.trim().isEmpty) &&
+                      ownerId != null) ...[
+                    _buildRetrieveCodeCard(ownerId),
+                    const SizedBox(height: 24),
+                  ],
 
-            // Join flow (only if not owner and not member)
-            if (!isOwner && !isMember) ...[
-              _buildJoinFamilySection(),
-              const SizedBox(height: 24),
-            ],
+                  // Join flow (only if not owner and not member)
+                  if (!isOwner && !isMember) ...[
+                    _buildJoinFamilySection(),
+                    const SizedBox(height: 24),
+                  ],
 
-            // Members list (if member or owner)
-            if (isMember || isOwner) ...[
-              _buildMembersList(isOwner, _familyMembers.length),
-              const SizedBox(height: 24),
-            ],
+                  // Members list (if member or owner)
+                  if (isMember || isOwner) ...[
+                    _buildMembersList(isOwner, _familyMembers.length),
+                    const SizedBox(height: 24),
+                  ],
 
-            // Cost breakdown (owner only)
-            if (isOwner) _buildCostBreakdown(userProfile.totalFamilyMembers),
-          ],
-        ),
-      ),
+                  // Cost breakdown (owner only)
+                  if (isOwner)
+                    _buildCostBreakdown(userProfile.totalFamilyMembers),
+                ],
+              ),
+            ),
     );
   }
 
@@ -206,7 +237,8 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
                 const SizedBox(width: 10),
                 Text(
                   l10n.familyPlanTileTitle,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -226,7 +258,8 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
                   backgroundColor: Colors.purple.shade700,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
               ),
             ),
@@ -306,10 +339,11 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
                     final box = context.findRenderObject() as RenderBox?;
                     Share.share(
                       '${l10n.shareFamilyMessageTitle}\n\n'
-                          '${l10n.shareFamilyCodeLabel}: $code\n\n'
-                          '${l10n.shareFamilyInstructions}',
+                      '${l10n.shareFamilyCodeLabel}: $code\n\n'
+                      '${l10n.shareFamilyInstructions}',
                       subject: l10n.shareFamilySubject,
-                      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+                      sharePositionOrigin:
+                          box!.localToGlobal(Offset.zero) & box.size,
                     );
                   },
                   icon: const Icon(Icons.share),
@@ -387,10 +421,12 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
               children: [
                 Text(
                   l10n.familyMembers,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.purple.shade100,
                     borderRadius: BorderRadius.circular(12),
@@ -427,25 +463,28 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
                   subtitle: Text(member['email']),
                   trailing: member['isOwner']
                       ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      l10n.owner,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            l10n.owner,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
                       : (isOwner
-                      ? IconButton(
-                    icon: const Icon(Icons.remove_circle, color: Colors.red),
-                    onPressed: () => _handleRemoveMember(member['uid']),
-                  )
-                      : null),
+                          ? IconButton(
+                              icon: const Icon(Icons.remove_circle,
+                                  color: Colors.red),
+                              onPressed: () =>
+                                  _handleRemoveMember(member['uid']),
+                            )
+                          : null),
                 );
               }).toList(),
           ],
@@ -477,7 +516,7 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
             if (_extraSlots > 0) ...[
               const SizedBox(height: 8),
               _buildCostRow(
-                'Extra Slots ($_extraSlots × \$${AppConstants.familyExtraMemberPrice.toStringAsFixed(2)})',
+                'Extra Slots ($_extraSlots ÃƒÆ’Ã¢â‚¬â€ \$${AppConstants.familyExtraMemberPrice.toStringAsFixed(2)})',
                 '\$${extraCost.toStringAsFixed(2)}',
               ),
             ],
@@ -564,7 +603,8 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Remove Member'),
-        content: const Text('Are you sure you want to remove this member from your family plan?'),
+        content: const Text(
+            'Are you sure you want to remove this member from your family plan?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -611,3 +651,6 @@ class _FamilyManagementScreenState extends State<FamilyManagementScreen> {
     }
   }
 }
+
+
+

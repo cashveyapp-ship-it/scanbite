@@ -1,7 +1,7 @@
 ﻿name: scanbite
 description: AI Food Nutrition Scanner
 publish_to: 'none'
-version: 1.0.1+41
+version: 1.0.1+40
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -52,7 +52,7 @@ dependencies:
 
 
   # In-App Purchases
-  in_app_purchase: ^3.3.0
+  in_app_purchase: ^3.2.0
   in_app_review: ^2.0.8
 
   # State Management
@@ -64,7 +64,7 @@ dependencies:
   image: ^4.7.2
 
   # ADD THESE FOR BILLING
-  in_app_purchase_android: ^0.5.0
+  in_app_purchase_android: ^0.3.0+16
 
   cupertino_icons: ^1.0.6
 
@@ -100,6 +100,5 @@ flutter_launcher_icons:
   adaptive_icon_background: "#FF6F00"
   adaptive_icon_foreground: "assets/icon/app_icon.png"
   remove_alpha_ios: true
-
 
 

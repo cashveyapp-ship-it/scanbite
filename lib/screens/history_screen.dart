@@ -73,11 +73,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scan History'),
-        backgroundColor: AppConstants.primaryColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppConstants.backgroundColor,
+        foregroundColor: Colors.black,
+        leading: Navigator.canPop(context)
+            ? IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                  size: 22,
+                ),
+                onPressed: () => Navigator.pop(context),
+              )
+            : null,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh, color: Colors.black),
             onPressed: _loadScans,
           ),
         ],
@@ -409,5 +419,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
   }
 }
+
+
+
+
+
 
 

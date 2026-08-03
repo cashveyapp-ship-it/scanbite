@@ -67,9 +67,23 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Analytics Dashboard'),
-        backgroundColor: AppConstants.primaryColor,
-        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+            size: 20,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Analytics Dashboard',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         actions: [
           PopupMenuButton<int>(
             icon: const Icon(Icons.calendar_today),
@@ -123,8 +137,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               icon: const Icon(Icons.refresh),
               label: const Text('Retry'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppConstants.primaryColor,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
               ),
             ),
           ],
@@ -164,7 +178,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppConstants.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(22),
               ),
               child: Column(
                 children: [
@@ -269,8 +283,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Widget _buildSummaryCard(String label, String value, IconData icon, Color color) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -279,7 +293,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(22),
         ),
         child: Column(
           children: [
@@ -307,8 +321,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     }
 
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -364,8 +378,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     }
 
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -430,8 +444,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     final total = _analytics!.mealDistribution.values.fold(0, (sum, count) => sum + count);
 
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -459,7 +473,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       titleStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: const Color(0xFFFFFFFF),
                       ),
                     );
                   }).toList(),
@@ -502,8 +516,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Widget _buildNutritionBreakdown() {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -556,8 +570,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Widget _buildEmptyChart(String title, String subtitle) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       child: Container(
         height: 150,
         padding: const EdgeInsets.all(24),
@@ -574,5 +588,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 }
+
 
 

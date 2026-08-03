@@ -1,4 +1,4 @@
-// subscription_screen.dart
+﻿// subscription_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -29,13 +29,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   String? _errorMessage;
   bool _useGooglePlay = false;
 
-  // ✅ keep as FIELD (do not shadow it inside methods)
+  // âœ… keep as FIELD (do not shadow it inside methods)
   bool _purchaseDialogOpen = false;
 
-  // ✅ NEW: track which product user tapped (single scan vs subscription)
+  // âœ… NEW: track which product user tapped (single scan vs subscription)
   String? _pendingProductId;
 
-  // ✅ REVIEWER BYPASS (Google Play review account)
+  // âœ… REVIEWER BYPASS (Google Play review account)
   bool _isReviewerEmail(String? email) {
     if (email == null) return false;
     return email.toLowerCase() == 'review@scanbiteapp.com';
@@ -61,7 +61,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     super.dispose();
   }
 
-  // ✅ ADDED: safe open/close dialog helpers
+  // âœ… ADDED: safe open/close dialog helpers
   void _openGoogleRedirectDialog() {
     if (_purchaseDialogOpen) return;
 
@@ -118,7 +118,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       return;
     }
 
-    print('💳 [SUBSCRIPTION] Initializing...');
+    print('ðŸ’³ [SUBSCRIPTION] Initializing...');
 
     try {
       await _subscriptionService.initialize(
@@ -128,11 +128,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       );
 
       final available = await _subscriptionService.isAvailable();
-      print('💳 [SUBSCRIPTION] Available: $available');
+      print('ðŸ’³ [SUBSCRIPTION] Available: $available');
 
       if (available) {
         final products = await _subscriptionService.getProducts();
-        print('💳 [SUBSCRIPTION] Products: ${products.length}');
+        print('ðŸ’³ [SUBSCRIPTION] Products: ${products.length}');
 
         setState(() {
           _products = products;
@@ -146,7 +146,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         });
       }
     } catch (e) {
-      print('❌ [SUBSCRIPTION] Error: $e');
+      print('âŒ [SUBSCRIPTION] Error: $e');
       setState(() {
         _useGooglePlay = false;
         _isLoading = false;
@@ -154,9 +154,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     }
   }
 
-  // ✅ UPDATED: now handles BOTH subscription and single scan credit purchases
+  // âœ… UPDATED: now handles BOTH subscription and single scan credit purchases
   Future<void> _handlePurchaseSuccess() async {
-    // ✅ ALWAYS close redirect dialog first
+    // âœ… ALWAYS close redirect dialog first
     _closeGoogleRedirectDialog();
 
     if (mounted) setState(() => _isPurchasing = false);
@@ -164,8 +164,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     final authProvider = context.read<AuthProvider>();
     final productId = _pendingProductId;
 
-    // ✅ 1) SINGLE SCAN purchase -> subscription_service already did FieldValue.increment(1)
-    // DO NOT add another +1 here — that caused the double-credit bug.
+    // âœ… 1) SINGLE SCAN purchase -> subscription_service already did FieldValue.increment(1)
+    // DO NOT add another +1 here â€” that caused the double-credit bug.
     if (productId == SubscriptionService.singleScanProductId) {
       // Just reload from Firestore so UI reflects the server-side increment
       await authProvider.loadUserProfile();
@@ -193,7 +193,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppConstants.primaryColor,
+                backgroundColor: Colors.white,
               ),
               child: const Text('Start Scanning'),
             ),
@@ -205,7 +205,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       return;
     }
 
-    // ✅ 2) SUBSCRIPTION purchase -> your existing premium flow
+    // âœ… 2) SUBSCRIPTION purchase -> your existing premium flow
     await authProvider.loadUserProfile();
 
     if (!mounted) return;
@@ -231,7 +231,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppConstants.primaryColor,
+              backgroundColor: Colors.white,
             ),
             child: const Text('Start Scanning'),
           ),
@@ -243,7 +243,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   }
 
   void _handlePurchaseError(String error) {
-    // ✅ ALWAYS close redirect dialog first
+    // âœ… ALWAYS close redirect dialog first
     _closeGoogleRedirectDialog();
 
     setState(() {
@@ -251,7 +251,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       _errorMessage = error;
     });
 
-    // ✅ Handle "Already Owned" error specially
+    // âœ… Handle "Already Owned" error specially
     if (error.contains('itemAlreadyOwned') || error.contains('already owned')) {
       if (!mounted) return;
 
@@ -297,7 +297,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppConstants.primaryColor,
+                backgroundColor: Colors.white,
               ),
               child: const Text('Restore Purchases'),
             ),
@@ -307,7 +307,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       return;
     }
 
-    // ✅ Handle other errors
+    // âœ… Handle other errors
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -325,15 +325,15 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       _errorMessage = null;
     });
 
-    // ✅ remember what user is purchasing (single scan vs subscription)
+    // âœ… remember what user is purchasing (single scan vs subscription)
     _pendingProductId = product.id;
 
-    // ✅ OPEN redirect dialog once (field is used, no shadowing)
+    // âœ… OPEN redirect dialog once (field is used, no shadowing)
     _openGoogleRedirectDialog();
 
     final success = await _subscriptionService.purchaseSubscription(product);
 
-    // ✅ If purchase could not even start, close the dialog immediately
+    // âœ… If purchase could not even start, close the dialog immediately
     if (!success) {
       _closeGoogleRedirectDialog();
       if (mounted) setState(() => _isPurchasing = false);
@@ -503,7 +503,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.purpleAccent,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(22),
                   border: Border.all(color: Colors.purple, width: 2),
                 ),
                 child: Text(
@@ -518,7 +518,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               ),
               const SizedBox(height: 16),
               const Text(
-                'They can enter this code in Settings → Family Plan',
+                'They can enter this code in Settings â†’ Family Plan',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12, color: Colors.grey),
               ),
@@ -569,9 +569,23 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose Your Plan'),
-        backgroundColor: AppConstants.primaryColor,
-        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+            size: 20,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Choose Your Plan',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: SafeArea(
         child: _isLoading
@@ -668,7 +682,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.purple.shade50,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(22),
                     border:
                     Border.all(color: Colors.purple.shade200),
                   ),
@@ -752,7 +766,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     );
   }
 
-  // ✅ UPDATED SIGNATURE: accepts isPremium
+  // âœ… UPDATED SIGNATURE: accepts isPremium
   Widget _buildCurrentStatusCard(dynamic userProfile, bool isPremium) {
     final scansRemaining = userProfile?.freeScansRemaining ?? 0;
 
@@ -767,7 +781,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -810,15 +824,15 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     );
   }
 
-  // ✅ UPDATED SIGNATURE: accepts isPremium
+  // âœ… UPDATED SIGNATURE: accepts isPremium
   Widget _buildFreePlanCard(dynamic userProfile, bool isPremium) {
     final scansUsed = AppConstants.freeScans -
         (userProfile?.freeScansRemaining ?? AppConstants.freeScans);
 
     return Card(
-      elevation: 2,
+      elevation: 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(color: Colors.grey.shade300),
       ),
       child: Padding(
@@ -840,7 +854,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ? Colors.grey
                         : AppConstants.successColor)
                         .withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(22),
                     border: Border.all(
                       color: isPremium
                           ? Colors.grey
@@ -903,9 +917,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         _useGooglePlay && singleScanProduct != null && !_isPurchasing;
 
     return Card(
-      elevation: 2,
+      elevation: 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(color: Colors.blue.shade200),
       ),
       child: Padding(
@@ -928,7 +942,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'per scan • No subscription required',
+              'per scan â€¢ No subscription required',
               style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 16),
@@ -983,9 +997,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         : (AppConstants.monthlyPrice * 12 - AppConstants.yearlyPrice);
 
     return Card(
-      elevation: 4,
+      elevation: 1.5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: isMonthly ? AppConstants.primaryColor : Colors.amber,
           width: 2,
@@ -1010,7 +1024,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.amber,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(22),
                     ),
                     child: const Text(
                       'BEST VALUE',
@@ -1098,9 +1112,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     final savings = isMonthly ? 0.0 : AppConstants.familyYearlySavings;
 
     return Card(
-      elevation: 4,
+      elevation: 1.5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: Colors.purple.shade700,
           width: 2,
@@ -1116,7 +1130,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -1144,7 +1158,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.purple.shade700,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(22),
                       ),
                       child: const Text(
                         'BEST VALUE',
@@ -1259,9 +1273,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
   Widget _buildProductCard(ProductDetails product, bool isMonthly) {
     return Card(
-      elevation: 4,
+      elevation: 1.5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: isMonthly ? AppConstants.primaryColor : Colors.amber,
           width: 2,
@@ -1288,7 +1302,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.amber,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(22),
                     ),
                     child: const Text(
                       'BEST VALUE',

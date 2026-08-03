@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -68,5 +65,16 @@ class DefaultFirebaseOptions {
     androidClientId: '246955389010-089s0gu5jutq1ah46hnqos2c84js1gom.apps.googleusercontent.com',
     iosClientId: '246955389010-1tpubrvr1en32aeataif867tpi7gs3c1.apps.googleusercontent.com',
     iosBundleId: 'com.an2app.scanbite',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyC9hUvWQGF5HZuSeaWdyU7kXxyG--SB1A4',
+    appId: '1:246955389010:web:f898bd90e3e8744eb5ef8b',
+    messagingSenderId: '246955389010',
+    projectId: 'scanbite-a7d63',
+    authDomain: 'scanbite-a7d63.firebaseapp.com',
+    databaseURL: 'https://scanbite-a7d63-default-rtdb.firebaseio.com',
+    storageBucket: 'scanbite-a7d63.firebasestorage.app',
+    measurementId: 'G-2ZFQCWYHTS',
   );
 }

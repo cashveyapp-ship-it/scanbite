@@ -16,8 +16,6 @@ import 'screens/auth_gate.dart';
 import 'firebase_options.dart';
 
 // TODO: uncomment both lines when ready for App Check
- import 'package:flutter/foundation.dart';
- import 'package:firebase_app_check/firebase_app_check.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,14 +23,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // TODO: uncomment when ready for App Check
-   await FirebaseAppCheck.instance.activate(
-     androidProvider: kReleaseMode
-         ? AndroidProvider.playIntegrity
-         : AndroidProvider.debug,
-   );
-
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
     cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
@@ -136,7 +126,7 @@ class _AppLifecycleHandlerState extends State<AppLifecycleHandler>
       final authProvider = context.read<AuthProvider>();
       authProvider.refreshProfileIfNeeded();
 
-      // Check for expired subscriptions on every foreground — cascades
+      // Check for expired subscriptions on every foreground ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â cascades
       // revoke to family members if the owner's sub has lapsed
       final userId = authProvider.user?.uid;
       if (userId != null) {

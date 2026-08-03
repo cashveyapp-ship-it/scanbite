@@ -43,12 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _loadTodayStats(String userId) async {
     try {
-      print('📊 Loading today stats for user: $userId');
+      print('ðŸ“Š Loading today stats for user: $userId');
 
       final stats = await _analyticsService.getTodayStats(userId);
 
-      print('📊 Stats returned: $stats');
-
+      print('ðŸ“Š Stats returned: $stats');
 
       if (mounted) {
         setState(() {
@@ -57,13 +56,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _isLoading = false;
         });
 
-        print(
-            'âœ… Stats set - Calories: $_todayCalories, Risk: $_todayRiskScore');
+        print('âœ… Stats set - Calories: $_todayCalories, Risk: $_todayRiskScore');
       }
     } catch (e, stackTrace) {
-      print('❌ Error loading stats: $e');
-      print('❌ Stack trace: $stackTrace');
-
+      print('âŒ Error loading stats: $e');
+      print('âŒ Stack trace: $stackTrace');
 
       if (mounted) {
         setState(() {
@@ -75,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ BMI CALCULATION METHOD
+  // âœ… BMI CALCULATION METHOD
   double? _calculateBMI(double? height, double? weight) {
     if (height == null || weight == null || height <= 0 || weight <= 0) {
       return null;
@@ -96,8 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (profile.gender != null) info.add(_getGenderText(profile.gender!));
     if (profile.height != null) info.add('${profile.height!.toInt()}cm');
     if (profile.weight != null) info.add('${profile.weight!.toInt()}kg');
-    return info.isEmpty ? 'Tap to add info' : info.join(' • ');
-
+    return info.isEmpty ? 'Tap to add info' : info.join(' â€¢ ');
   }
 
   String _getGenderText(Gender gender) {
@@ -153,15 +149,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userProfile = authProvider.userProfile;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAF7),
+      backgroundColor: AppConstants.backgroundColor,
       appBar: AppBar(
-        title: const Text(
-          'Profile & Nutrition',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Profile & Nutrition'),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         actions: [
@@ -190,144 +180,142 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: userProfile == null
+
+        body: userProfile == null
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
-              onRefresh: _loadDashboardData,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(16.0),
+        onRefresh: _loadDashboardData,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              // Profile Header
+              _buildProfileHeader(userProfile),
+              const SizedBox(height: 24),
+
+              // Today's Dashboard - âœ… FIXED TO ALWAYS SHOW BMI
+              _buildTodayDashboard(userProfile),
+              const SizedBox(height: 16),
+
+              // Quick Actions
+              _buildQuickActions(),
+              const SizedBox(height: 16),
+
+              // Personal Settings
+              _buildPersonalSettings(userProfile),
+              const SizedBox(height: 16),
+
+              // Health Settings
+              _buildHealthSettings(userProfile),
+              const SizedBox(height: 32),
+
+              // Account Management Section
+              Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   children: [
-                    // Profile Header
-                    _buildProfileHeader(userProfile),
-                    const SizedBox(height: 24),
-
-                    // Today's Dashboard - ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED TO ALWAYS SHOW BMI
-                    _buildTodayDashboard(userProfile),
-                    const SizedBox(height: 16),
-
-                    // Quick Actions
-                    _buildQuickActions(),
-                    const SizedBox(height: 16),
-
-                    // Personal Settings
-                    _buildPersonalSettings(userProfile),
-                    const SizedBox(height: 16),
-
-                    // Health Settings
-                    _buildHealthSettings(userProfile),
-                    const SizedBox(height: 32),
-
-                    // Account Management Section
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Account Management',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Account Management',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const Divider(height: 1),
-                          ListTile(
-                            leading: const CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              child: Icon(
-                                Icons.lock_reset,
-                                color: const Color(0xFF1C1C1E),
-                                size: 20,
-                              ),
-                            ),
-                            title: const Text('Change Password'),
-                            subtitle: const Text('Update your password'),
-                            trailing:
-                                const Icon(Icons.arrow_forward_ios, size: 16),
-                            onTap: () => _showChangePasswordDialog(),
-                          ),
-                          const Divider(height: 1),
-                          ListTile(
-                            leading: const CircleAvatar(
-                              backgroundColor: Colors.red,
-                              child: Icon(
-                                Icons.delete_forever,
-                                color: const Color(0xFF1C1C1E),
-                                size: 20,
-                              ),
-                            ),
-                            title: const Text('Delete Account'),
-                            subtitle:
-                                const Text('Permanently delete your account'),
-                            trailing:
-                                const Icon(Icons.arrow_forward_ios, size: 16),
-                            onTap: () => _showDeleteAccountDialog(),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    // Logout Button
-                    CustomButton(
-                      text: 'Logout',
-                      onPressed: () async {
-                        await authProvider.signOut();
-                        if (!mounted) return;
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                          (route) => false,
-                        );
-                      },
-                      backgroundColor: Colors.red,
-                      icon: Icons.logout,
-                    ),
-
-                    const SizedBox(height: 16),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          children: const [
-                            Text(
-                              'Nutrition estimates sourced from USDA FoodData Central and public nutrition databases.',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              'Informational only - Not medical advice.',
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.grey,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 80),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        child: Icon(
+                          Icons.lock_reset,
+                          color: AppConstants.primaryTextColor,
+                          size: 20,
+                        ),
+                      ),
+                      title: const Text('Change Password'),
+                      subtitle: const Text('Update your password'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () => _showChangePasswordDialog(),
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundColor: Colors.red,
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: AppConstants.primaryTextColor,
+                          size: 20,
+                        ),
+                      ),
+                      title: const Text('Delete Account'),
+                      subtitle: const Text('Permanently delete your account'),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () => _showDeleteAccountDialog(),
+                    ),
                   ],
                 ),
               ),
-            ),
+
+              const SizedBox(height: 16),
+
+              // Logout Button
+              CustomButton(
+                text: 'Logout',
+                onPressed: () async {
+                  await authProvider.signOut();
+                  if (!mounted) return;
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                        (route) => false,
+                  );
+                },
+                backgroundColor: Colors.red,
+                icon: Icons.logout,
+              ),
+
+              const SizedBox(height: 16),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'Nutrition estimates sourced from USDA FoodData Central and public nutrition databases.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 6),
+                      Text(
+                        'Informational only â€” not medical advice.',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 80),
+
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -349,13 +337,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundColor: const Color(0xFFEAF8EE),
+              backgroundColor: Colors.white,
               child: Text(
                 _getInitial(profile.displayName),
                 style: TextStyle(
                   fontSize: 36,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF34C759),
+                  fontWeight: FontWeight.bold,
+                  color: AppConstants.primaryColor,
                 ),
               ),
             ),
@@ -364,8 +352,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               profile.displayName ?? 'User',
               style: const TextStyle(
                 fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF1C1C1E),
+                fontWeight: FontWeight.bold,
+                color: AppConstants.primaryTextColor,
               ),
             ),
             const SizedBox(height: 4),
@@ -373,27 +361,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
               profile.email,
               style: const TextStyle(
                 fontSize: 14,
-                color: const Color(0xFF8E8E93),
+                color: AppConstants.secondaryTextColor,
               ),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: const Color(0xFF1C1C1E),
+                color: AppConstants.primaryTextColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.all_inclusive,
-                      color: const Color(0xFF34C759), size: 16),
+                  Icon(Icons.all_inclusive, color: AppConstants.primaryColor, size: 16),
                   const SizedBox(width: 6),
                   Text(
                     'Unlimited Scans',
                     style: TextStyle(
-                      color: const Color(0xFF34C759),
-                      fontWeight: FontWeight.w700,
+                      color: AppConstants.primaryColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
                   ),
@@ -406,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED: BMI CARD NOW ALWAYS APPEARS (shows "Set Info" if no height/weight)
+  // âœ… FIXED: BMI CARD NOW ALWAYS APPEARS (shows "Set Info" if no height/weight)
   Widget _buildTodayDashboard(dynamic profile) {
     return Card(
       elevation: 0,
@@ -421,14 +408,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 const Text(
                   'Today\'s Overview',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 TextButton.icon(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const AnalyticsScreen()),
+                      MaterialPageRoute(builder: (context) => const AnalyticsScreen()),
                     );
                   },
                   icon: const Icon(Icons.analytics, size: 16),
@@ -460,26 +446,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ BMI ROW - ALWAYS SHOWS (prompts user if data missing)
+            // âœ… BMI ROW - ALWAYS SHOWS (prompts user if data missing)
             const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
                   child: profile.bmi != null
                       ? _buildStatCard(
-                          'Body Metrics',
-                          profile.bmi!.toStringAsFixed(1),
-                          _getBMICategory(profile.bmi!),
-                          Icons.monitor_weight,
-                          const Color(0xFF34C759),
-                        )
+                    'Body Metrics',
+                    profile.bmi!.toStringAsFixed(1),
+                    _getBMICategory(profile.bmi!),
+                    Icons.monitor_weight,
+                    AppConstants.primaryColor,
+                  )
                       : _buildStatCard(
-                          'Body Metrics',
-                          '---',
-                          'Set Info',
-                          Icons.monitor_weight,
-                          Colors.grey,
-                        ),
+                    'Body Metrics',
+                    '---',
+                    'Set Info',
+                    Icons.monitor_weight,
+                    Colors.grey,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -504,9 +490,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppConstants.borderColor),
+        border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -525,15 +511,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label,
             style: TextStyle(
               fontSize: 11,
-              color: const Color(0xFF6E6E73),
-              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
             ),
           ),
           Text(
             subtitle,
             style: TextStyle(
               fontSize: 10,
-              color: const Color(0xFF8E8E93),
+              color: Colors.grey.shade600,
             ),
           ),
         ],
@@ -552,7 +538,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             const Text(
               'Quick Actions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             Row(
@@ -562,11 +548,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     'Insights',
                     Icons.lightbulb,
                     AppConstants.accentColor,
-                    () {
+                        () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const InsightsScreen()),
+                        MaterialPageRoute(builder: (context) => const InsightsScreen()),
                       );
                     },
                   ),
@@ -576,12 +561,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: _buildActionButton(
                     'History',
                     Icons.history,
-                    const Color(0xFF34C759),
-                    () {
+                    AppConstants.primaryColor,
+                        () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const HistoryScreen()),
+                        MaterialPageRoute(builder: (context) => const HistoryScreen()),
                       );
                     },
                   ),
@@ -592,11 +576,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     'Analytics',
                     Icons.bar_chart,
                     AppConstants.secondaryColor,
-                    () {
+                        () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const AnalyticsScreen()),
+                        MaterialPageRoute(builder: (context) => const AnalyticsScreen()),
                       );
                     },
                   ),
@@ -609,17 +592,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildActionButton(
-      String label, IconData icon, Color color, VoidCallback onTap) {
+  Widget _buildActionButton(String label, IconData icon, Color color, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppConstants.borderColor),
+          border: Border.all(color: color.withOpacity(0.3)),
         ),
         child: Column(
           children: [
@@ -629,7 +611,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               label,
               style: TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.bold,
                 color: color,
               ),
             ),
@@ -651,7 +633,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Personal Settings',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -659,8 +641,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: const CircleAvatar(
               backgroundColor: Colors.white,
-              child:
-                  Icon(Icons.person, color: const Color(0xFF1C1C1E), size: 20),
+              child: Icon(Icons.person, color: AppConstants.primaryTextColor, size: 20),
             ),
             title: const Text('Personal Info'),
             subtitle: Text(_getPersonalInfoText(profile)),
@@ -671,8 +652,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: const CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(Icons.track_changes,
-                  color: const Color(0xFF1C1C1E), size: 20),
+              child: Icon(Icons.track_changes, color: AppConstants.primaryTextColor, size: 20),
             ),
             title: const Text('My Goal'),
             subtitle: Text(_getGoalText(profile.goal)),
@@ -698,7 +678,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Nutrition Preferences',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -706,15 +686,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SwitchListTile(
             secondary: const CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(Icons.health_and_safety,
-                  color: const Color(0xFF1C1C1E), size: 20),
+              child: Icon(Icons.health_and_safety, color: AppConstants.primaryTextColor, size: 20),
             ),
             title: const Text('Sugar & Carb Estimates'),
             subtitle: const Text(
               'Displays estimated sugar and carbohydrate values from public nutrition databases.',
             ),
             value: profile.isDiabetic,
-            activeColor: const Color(0xFF34C759),
+            activeColor: AppConstants.primaryColor,
             onChanged: (value) {
               authProvider.updateProfile(profile.copyWith(isDiabetic: value));
             },
@@ -723,12 +702,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: const CircleAvatar(
               backgroundColor: Colors.white,
-              child:
-                  Icon(Icons.warning, color: const Color(0xFF1C1C1E), size: 20),
+              child: Icon(Icons.warning, color: AppConstants.primaryTextColor, size: 20),
             ),
             title: const Text('Ingredient Alerts'),
-            subtitle: Text(
-                '${profile.allergyList.length} ingredient preference saved'),
+            subtitle: Text('${profile.allergyList.length} ingredient preference saved'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => _showAllergenDialog(profile),
           ),
@@ -736,12 +713,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: const CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(Icons.restaurant,
-                  color: const Color(0xFF1C1C1E), size: 20),
+              child: Icon(Icons.restaurant, color: AppConstants.primaryTextColor, size: 20),
             ),
             title: const Text('Food Preferences'),
-            subtitle: Text(
-                '${profile.dietaryRestrictions.length} preference selected'),
+            subtitle: Text('${profile.dietaryRestrictions.length} preference selected'),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () => _showDietaryDialog(profile),
           ),
@@ -750,28 +725,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED: Prevents multiple saves, handles errors, forces UI refresh
+  // âœ… FIXED: Prevents multiple saves, handles errors, forces UI refresh
   void _showPersonalInfoDialog(dynamic profile) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final ageController =
-        TextEditingController(text: profile.age?.toString() ?? '');
-    final heightController =
-        TextEditingController(text: profile.height?.toString() ?? '');
-    final weightController =
-        TextEditingController(text: profile.weight?.toString() ?? '');
+    final ageController = TextEditingController(text: profile.age?.toString() ?? '');
+    final heightController = TextEditingController(text: profile.height?.toString() ?? '');
+    final weightController = TextEditingController(text: profile.weight?.toString() ?? '');
     Gender? selectedGender = profile.gender;
-    bool isSaving = false; // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Track save state
+    bool isSaving = false; // âœ… NEW: Track save state
 
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent dismiss during save
+      barrierDismissible: false, // âœ… NEW: Prevent dismiss during save
       builder: (dialogContext) {
         return StatefulBuilder(
           builder: (_, setDialogState) {
             return WillPopScope(
-              onWillPop: () async =>
-                  !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent back during save
+              onWillPop: () async => !isSaving, // âœ… NEW: Prevent back during save
               child: AlertDialog(
                 title: const Text('Personal Information'),
                 content: SingleChildScrollView(
@@ -781,8 +751,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       TextField(
                         controller: ageController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // âœ… NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Age',
                           hintText: 'e.g., 25',
@@ -794,18 +763,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         decoration: const InputDecoration(labelText: 'Gender'),
                         items: Gender.values
                             .map((g) => DropdownMenuItem(
-                                value: g, child: Text(_getGenderText(g))))
+                            value: g, child: Text(_getGenderText(g))))
                             .toList(),
                         onChanged: isSaving
-                            ? null // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                            ? null // âœ… NEW: Disable during save
                             : (v) => setDialogState(() => selectedGender = v),
                       ),
                       const SizedBox(height: 12),
                       TextField(
                         controller: heightController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // âœ… NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Height (cm)',
                           hintText: 'e.g., 175',
@@ -815,14 +783,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       TextField(
                         controller: weightController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // âœ… NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Weight (kg)',
                           hintText: 'e.g., 70',
                         ),
                       ),
-                      if (isSaving) // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Show saving indicator
+                      if (isSaving) // âœ… NEW: Show saving indicator
                         const Padding(
                           padding: EdgeInsets.only(top: 16.0),
                           child: Row(
@@ -831,8 +798,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SizedBox(
                                 width: 20,
                                 height: 20,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(strokeWidth: 2),
                               ),
                               SizedBox(width: 12),
                               Text('Saving...'),
@@ -844,103 +810,91 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 actions: [
                   TextButton(
-                    onPressed: isSaving
-                        ? null
-                        : () => Navigator.of(dialogContext).pop(),
+                    onPressed: isSaving ? null : () => Navigator.of(dialogContext).pop(),
                     child: const Text('Cancel'),
                   ),
                   ElevatedButton(
                     onPressed: isSaving
-                        ? null // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable button during save
+                        ? null // âœ… NEW: Disable button during save
                         : () async {
-                            // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent double-tap
-                            if (isSaving) return;
+                      // âœ… NEW: Prevent double-tap
+                      if (isSaving) return;
 
-                            setDialogState(() => isSaving = true);
+                      setDialogState(() => isSaving = true);
 
-                            try {
-                              final age = int.tryParse(ageController.text);
-                              final height =
-                                  double.tryParse(heightController.text);
-                              final weight =
-                                  double.tryParse(weightController.text);
-                              final bmi = _calculateBMI(height, weight);
+                      try {
+                        final age = int.tryParse(ageController.text);
+                        final height = double.tryParse(heightController.text);
+                        final weight = double.tryParse(weightController.text);
+                        final bmi = _calculateBMI(height, weight);
 
-                              print('💾 Saving personal info:');
-                              print('   Age: $age, Gender: $selectedGender');
-                              print('   Height: $height, Weight: $weight, BMI: $bmi');
+                        print('ðŸ’¾ Saving personal info:');
+                        print('   Age: $age, Gender: $selectedGender');
+                        print('   Height: $height, Weight: $weight, BMI: $bmi');
 
-
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Add timeout to catch Firestore hangs
-                              await authProvider
-                                  .updateProfile(
-                                profile.copyWith(
-                                  age: age,
-                                  gender: selectedGender,
-                                  height: height,
-                                  weight: weight,
-                                  bmi: bmi,
-                                ),
-                              )
-                                  .timeout(
-                                const Duration(seconds: 10),
-                                onTimeout: () {
-                                  throw Exception(
-                                      'Save timed out - check internet');
-                                },
-                              );
-
-                              print('✅ Profile update completed');
-
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Force reload from Firebase
-                              await authProvider.loadUserProfile();
-
-                              if (!mounted) return;
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Close dialog BEFORE showing snackbar
-                              Navigator.of(dialogContext).pop();
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Force UI refresh
-                              setState(() {});
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Show success
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Saved successfully!'),
-                                  backgroundColor: Colors.green,
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            } catch (e) {
-                              print('❌ Save failed: $e');
-
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Re-enable button on error
-                              setDialogState(() => isSaving = false);
-
-                              if (!mounted) return;
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Error: ${e.toString().replaceAll('Exception: ', '')}'),
-                                  backgroundColor: Colors.red,
-                                  duration: const Duration(seconds: 4),
-                                ),
-                              );
-                            }
+                        // âœ… NEW: Add timeout to catch Firestore hangs
+                        await authProvider.updateProfile(
+                          profile.copyWith(
+                            age: age,
+                            gender: selectedGender,
+                            height: height,
+                            weight: weight,
+                            bmi: bmi,
+                          ),
+                        ).timeout(
+                          const Duration(seconds: 10),
+                          onTimeout: () {
+                            throw Exception('Save timed out - check internet');
                           },
+                        );
+
+                        print('âœ… Profile update completed');
+
+                        // âœ… NEW: Force reload from Firebase
+                        await authProvider.loadUserProfile();
+
+                        if (!mounted) return;
+
+                        // âœ… Close dialog BEFORE showing snackbar
+                        Navigator.of(dialogContext).pop();
+
+                        // âœ… Force UI refresh
+                        setState(() {});
+
+                        // âœ… Show success
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Saved successfully!'),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      } catch (e) {
+                        print('âŒ Save failed: $e');
+
+                        // âœ… Re-enable button on error
+                        setDialogState(() => isSaving = false);
+
+                        if (!mounted) return;
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Error: ${e.toString().replaceAll('Exception: ', '')}'),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 4),
+                          ),
+                        );
+                      }
+                    },
                     child: isSaving
                         ? const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: const Color(0xFF1C1C1E),
-                            ),
-                          )
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppConstants.primaryTextColor,
+                      ),
+                    )
                         : const Text('Save'),
                   ),
                 ],
@@ -951,7 +905,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-
   void _showGoalDialog(dynamic profile) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     UserGoal? selectedGoal = profile.goal;
@@ -986,7 +939,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         profile.copyWith(goal: selectedGoal),
                       );
 
-                      // ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“ Reload profile from Firestore to guarantee persistence
+                      // ðŸ”‘ Reload profile from Firestore to guarantee persistence
                       await authProvider.loadUserProfile();
                     }
 
@@ -995,6 +948,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                   child: const Text('Save'),
                 ),
+
               ],
             );
           },
@@ -1031,8 +985,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return CheckboxListTile(
                       title: Text(a),
                       value: selected.contains(a),
-                      onChanged: (v) => setDialogState(
-                          () => v! ? selected.add(a) : selected.remove(a)),
+                      onChanged: (v) =>
+                          setDialogState(() => v! ? selected.add(a) : selected.remove(a)),
                     );
                   }).toList(),
                 ),
@@ -1044,8 +998,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    authProvider
-                        .updateProfile(profile.copyWith(allergyList: selected));
+                    authProvider.updateProfile(profile.copyWith(allergyList: selected));
                     Navigator.of(dialogContext).pop();
                   },
                   child: const Text('Save'),
@@ -1088,8 +1041,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return CheckboxListTile(
                       title: Text(r),
                       value: selected.contains(r),
-                      onChanged: (v) => setDialogState(
-                          () => v! ? selected.add(r) : selected.remove(r)),
+                      onChanged: (v) =>
+                          setDialogState(() => v! ? selected.add(r) : selected.remove(r)),
                     );
                   }).toList(),
                 ),
@@ -1141,11 +1094,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         labelText: 'Current Password',
                         prefixIcon: const Icon(Icons.lock),
                         suffixIcon: IconButton(
-                          icon: Icon(obscureCurrent
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () => setDialogState(
-                              () => obscureCurrent = !obscureCurrent),
+                          icon: Icon(
+                              obscureCurrent ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () =>
+                              setDialogState(() => obscureCurrent = !obscureCurrent),
                         ),
                       ),
                     ),
@@ -1157,11 +1109,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         labelText: 'New Password',
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
-                          icon: Icon(obscureNew
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () =>
-                              setDialogState(() => obscureNew = !obscureNew),
+                          icon:
+                          Icon(obscureNew ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () => setDialogState(() => obscureNew = !obscureNew),
                         ),
                       ),
                     ),
@@ -1176,8 +1126,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           icon: Icon(obscureConfirm
                               ? Icons.visibility_off
                               : Icons.visibility),
-                          onPressed: () => setDialogState(
-                              () => obscureConfirm = !obscureConfirm),
+                          onPressed: () =>
+                              setDialogState(() => obscureConfirm = !obscureConfirm),
                         ),
                       ),
                     ),
@@ -1208,8 +1158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     if (newPass.length < 6) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content:
-                              Text('Password must be at least 6 characters'),
+                          content: Text('Password must be at least 6 characters'),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -1228,7 +1177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     try {
                       final authProvider =
-                          Provider.of<AuthProvider>(context, listen: false);
+                      Provider.of<AuthProvider>(context, listen: false);
                       await authProvider.changePassword(current, newPass);
 
                       if (!mounted) return;
@@ -1244,8 +1193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content:
-                              Text(e.toString().replaceAll('Exception: ', '')),
+                          content: Text(e.toString().replaceAll('Exception: ', '')),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -1286,7 +1234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     'This action cannot be undone. All your data will be permanently deleted.',
                     style: TextStyle(
                       color: Colors.red,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -1302,8 +1250,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: Icon(obscurePassword
                             ? Icons.visibility_off
                             : Icons.visibility),
-                        onPressed: () => setDialogState(
-                            () => obscurePassword = !obscurePassword),
+                        onPressed: () =>
+                            setDialogState(() => obscurePassword = !obscurePassword),
                       ),
                     ),
                   ),
@@ -1330,16 +1278,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     try {
                       final authProvider =
-                          Provider.of<AuthProvider>(context, listen: false);
+                      Provider.of<AuthProvider>(context, listen: false);
                       await authProvider.deleteAccount(password);
 
                       if (!mounted) return;
                       Navigator.of(dialogContext).pop();
 
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()),
-                        (route) => false,
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            (route) => false,
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -1352,8 +1299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content:
-                              Text(e.toString().replaceAll('Exception: ', '')),
+                          content: Text(e.toString().replaceAll('Exception: ', '')),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -1370,5 +1316,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-

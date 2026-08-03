@@ -1,10 +1,11 @@
 // admin_ratings_screen.dart (FULL UPDATED)
-// ✅ Admin-only screen (you already gate it in Settings)
-// ✅ Shows all ratings + allows admin to reply/edit reply
-// ✅ Writes: adminReply + adminReplyAt + adminRepliedBy ("Admin") + reply seen flags
-// ✅ Fully localized with AppLocalizations
+// Ã¢Å“â€¦ Admin-only screen (you already gate it in Settings)
+// Ã¢Å“â€¦ Shows all ratings + allows admin to reply/edit reply
+// Ã¢Å“â€¦ Writes: adminReply + adminReplyAt + adminRepliedBy ("Admin") + reply seen flags
+// Ã¢Å“â€¦ Fully localized with AppLocalizations
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
@@ -28,13 +29,13 @@ class AdminRatingsScreen extends StatelessWidget {
   }
 
   Future<void> _reply(
-      BuildContext context,
-      String docId,
-      Map<String, dynamic> data,
-      ) async {
+    BuildContext context,
+    String docId,
+    Map<String, dynamic> data,
+  ) async {
     final l10n = AppLocalizations.of(context)!;
     final ctrl =
-    TextEditingController(text: (data['adminReply'] ?? '').toString());
+        TextEditingController(text: (data['adminReply'] ?? '').toString());
 
     final ok = await showDialog<bool>(
       context: context,
@@ -102,24 +103,34 @@ class AdminRatingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // ✅ PRODUCTION-SAFE ADMIN GATE (minimal, won’t break your logic)
+    // Ã¢Å“â€¦ PRODUCTION-SAFE ADMIN GATE (minimal, wonÃ¢â‚¬â„¢t break your logic)
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     const adminEmails = ['an2mouth@yahoo.com', 'alerttmenow@gmail.com'];
 
-    final email = ((authProvider.userProfile?.email ?? authProvider.user?.email) ?? '')
-        .trim()
-        .toLowerCase();
+    final email =
+        ((authProvider.userProfile?.email ?? authProvider.user?.email) ?? '')
+            .trim()
+            .toLowerCase();
 
     if (!adminEmails.contains(email)) {
       return Scaffold(
         appBar: AppBar(
+          leading: CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => Navigator.of(context).maybePop(),
+            child: const Icon(
+              CupertinoIcons.back,
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
           title: const Text('Access Denied'),
           backgroundColor: Colors.red,
           foregroundColor: Colors.white,
         ),
         body: Center(
           child: Text(
-            l10n.adminRatingsAccessDenied, // ✅ add this string or replace with hard text below
+            l10n.adminRatingsAccessDenied, // Ã¢Å“â€¦ add this string or replace with hard text below
             // If you don't want to add a localization key, replace with:
             // 'You do not have admin access.',
             style: const TextStyle(
@@ -135,6 +146,15 @@ class AdminRatingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.of(context).maybePop(),
+          child: const Icon(
+            CupertinoIcons.back,
+            size: 24,
+            color: Colors.white,
+          ),
+        ),
         title: Text(l10n.adminRatingsTitle),
         backgroundColor: AppConstants.primaryColor,
         foregroundColor: Colors.white,
@@ -170,7 +190,7 @@ class AdminRatingsScreen extends StatelessWidget {
 
               final starsRaw = d['stars'];
               final stars =
-              starsRaw is int ? starsRaw : int.tryParse('$starsRaw') ?? 0;
+                  starsRaw is int ? starsRaw : int.tryParse('$starsRaw') ?? 0;
 
               final comment = (d['comment'] ?? '').toString();
               final createdAt = _fmtTs(d['createdAt']);
@@ -244,18 +264,18 @@ class AdminRatingsScreen extends StatelessWidget {
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              if (replyAt.isNotEmpty || repliedBy.isNotEmpty)
-                                ...[
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    [
-                                      if (replyAt.isNotEmpty) replyAt,
-                                      if (repliedBy.isNotEmpty) repliedBy,
-                                    ].join(' • '),
-                                    style: const TextStyle(
-                                        fontSize: 11, color: Colors.grey),
-                                  ),
-                                ],
+                              if (replyAt.isNotEmpty ||
+                                  repliedBy.isNotEmpty) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  [
+                                    if (replyAt.isNotEmpty) replyAt,
+                                    if (repliedBy.isNotEmpty) repliedBy,
+                                  ].join(' • '),
+                                  style: const TextStyle(
+                                      fontSize: 11, color: Colors.grey),
+                                ),
+                              ],
                               const SizedBox(height: 6),
                               Text(reply),
                             ],

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../services/analytics_service.dart';
@@ -49,7 +49,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       print('📊 Stats returned: $stats');
 
-
       if (mounted) {
         setState(() {
           _todayCalories = (stats['totalCalories'] as num).toInt();
@@ -57,13 +56,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _isLoading = false;
         });
 
-        print(
-            'âœ… Stats set - Calories: $_todayCalories, Risk: $_todayRiskScore');
+        print('✅ Stats set - Calories: $_todayCalories, Risk: $_todayRiskScore');
+
       }
     } catch (e, stackTrace) {
       print('❌ Error loading stats: $e');
       print('❌ Stack trace: $stackTrace');
-
 
       if (mounted) {
         setState(() {
@@ -75,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ BMI CALCULATION METHOD
+  // Ã¢Å“â€¦ BMI CALCULATION METHOD
   double? _calculateBMI(double? height, double? weight) {
     if (height == null || weight == null || height <= 0 || weight <= 0) {
       return null;
@@ -153,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userProfile = authProvider.userProfile;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAF7),
+      backgroundColor: AppConstants.backgroundColor,
       appBar: AppBar(
         title: const Text(
           'Profile & Nutrition',
@@ -203,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     _buildProfileHeader(userProfile),
                     const SizedBox(height: 24),
 
-                    // Today's Dashboard - ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED TO ALWAYS SHOW BMI
+                    // Today's Dashboard - Ã¢Å“â€¦ FIXED TO ALWAYS SHOW BMI
                     _buildTodayDashboard(userProfile),
                     const SizedBox(height: 16),
 
@@ -349,7 +347,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundColor: const Color(0xFFEAF8EE),
+              backgroundColor: Colors.white,
               child: Text(
                 _getInitial(profile.displayName),
                 style: TextStyle(
@@ -406,7 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED: BMI CARD NOW ALWAYS APPEARS (shows "Set Info" if no height/weight)
+  // Ã¢Å“â€¦ FIXED: BMI CARD NOW ALWAYS APPEARS (shows "Set Info" if no height/weight)
   Widget _buildTodayDashboard(dynamic profile) {
     return Card(
       elevation: 0,
@@ -460,7 +458,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ BMI ROW - ALWAYS SHOWS (prompts user if data missing)
+            // Ã¢Å“â€¦ BMI ROW - ALWAYS SHOWS (prompts user if data missing)
             const SizedBox(height: 12),
             Row(
               children: [
@@ -750,7 +748,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ FIXED: Prevents multiple saves, handles errors, forces UI refresh
+  // Ã¢Å“â€¦ FIXED: Prevents multiple saves, handles errors, forces UI refresh
   void _showPersonalInfoDialog(dynamic profile) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final ageController =
@@ -760,18 +758,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final weightController =
         TextEditingController(text: profile.weight?.toString() ?? '');
     Gender? selectedGender = profile.gender;
-    bool isSaving = false; // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Track save state
+    bool isSaving = false; // Ã¢Å“â€¦ NEW: Track save state
 
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent dismiss during save
+      barrierDismissible: false, // Ã¢Å“â€¦ NEW: Prevent dismiss during save
       builder: (dialogContext) {
         return StatefulBuilder(
           builder: (_, setDialogState) {
             return WillPopScope(
               onWillPop: () async =>
-                  !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent back during save
+                  !isSaving, // Ã¢Å“â€¦ NEW: Prevent back during save
               child: AlertDialog(
                 title: const Text('Personal Information'),
                 content: SingleChildScrollView(
@@ -781,8 +778,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       TextField(
                         controller: ageController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // Ã¢Å“â€¦ NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Age',
                           hintText: 'e.g., 25',
@@ -797,15 +793,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 value: g, child: Text(_getGenderText(g))))
                             .toList(),
                         onChanged: isSaving
-                            ? null // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                            ? null // Ã¢Å“â€¦ NEW: Disable during save
                             : (v) => setDialogState(() => selectedGender = v),
                       ),
                       const SizedBox(height: 12),
                       TextField(
                         controller: heightController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // Ã¢Å“â€¦ NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Height (cm)',
                           hintText: 'e.g., 175',
@@ -815,14 +810,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       TextField(
                         controller: weightController,
                         keyboardType: TextInputType.number,
-                        enabled:
-                            !isSaving, // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable during save
+                        enabled: !isSaving, // Ã¢Å“â€¦ NEW: Disable during save
                         decoration: const InputDecoration(
                           labelText: 'Weight (kg)',
                           hintText: 'e.g., 70',
                         ),
                       ),
-                      if (isSaving) // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Show saving indicator
+                      if (isSaving) // Ã¢Å“â€¦ NEW: Show saving indicator
                         const Padding(
                           padding: EdgeInsets.only(top: 16.0),
                           child: Row(
@@ -851,9 +845,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   ElevatedButton(
                     onPressed: isSaving
-                        ? null // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Disable button during save
+                        ? null // Ã¢Å“â€¦ NEW: Disable button during save
                         : () async {
-                            // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Prevent double-tap
+                            // Ã¢Å“â€¦ NEW: Prevent double-tap
                             if (isSaving) return;
 
                             setDialogState(() => isSaving = true);
@@ -868,11 +862,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               print('💾 Saving personal info:');
                               print('   Age: $age, Gender: $selectedGender');
-                              print('   Height: $height, Weight: $weight, BMI: $bmi');
+                              print(
+                                  '   Height: $height, Weight: $weight, BMI: $bmi');
 
-
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Add timeout to catch Firestore hangs
+                              // Ã¢Å“â€¦ NEW: Add timeout to catch Firestore hangs
                               await authProvider
                                   .updateProfile(
                                 profile.copyWith(
@@ -893,19 +886,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               print('✅ Profile update completed');
 
-
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ NEW: Force reload from Firebase
+                              // Ã¢Å“â€¦ NEW: Force reload from Firebase
                               await authProvider.loadUserProfile();
 
                               if (!mounted) return;
 
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Close dialog BEFORE showing snackbar
+                              // Ã¢Å“â€¦ Close dialog BEFORE showing snackbar
                               Navigator.of(dialogContext).pop();
 
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Force UI refresh
+                              // Ã¢Å“â€¦ Force UI refresh
                               setState(() {});
 
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Show success
+                              // Ã¢Å“â€¦ Show success
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Saved successfully!'),
@@ -917,7 +909,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               print('❌ Save failed: $e');
 
 
-                              // ÃƒÆ’Ã‚Â¢Ãƒâ€¦Ã¢â‚¬Å“ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ Re-enable button on error
+                              // Ã¢Å“â€¦ Re-enable button on error
                               setDialogState(() => isSaving = false);
 
                               if (!mounted) return;
@@ -986,7 +978,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         profile.copyWith(goal: selectedGoal),
                       );
 
-                      // ÃƒÆ’Ã‚Â°Ãƒâ€¦Ã‚Â¸ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã‹Å“ Reload profile from Firestore to guarantee persistence
+                      // Ã°Å¸â€â€˜ Reload profile from Firestore to guarantee persistence
                       await authProvider.loadUserProfile();
                     }
 
@@ -1370,5 +1362,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
