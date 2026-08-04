@@ -1,7 +1,7 @@
-name: scanbite
+﻿name: scanbite
 description: AI Food Nutrition Scanner
 publish_to: 'none'
-version: 1.0.1+42
+version: 1.0.2+42
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -100,6 +100,7 @@ flutter_launcher_icons:
   adaptive_icon_background: "#FF6F00"
   adaptive_icon_foreground: "assets/icon/app_icon.png"
   remove_alpha_ios: true
+
 
 
 
